@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">My Pantry</string>
+    <string name="home_label">Home</string>
+    <string name="pantry_label">Pantry</string>
+    <string name="recipes_label">Recipes</string>
+    <string name="shopping_list_label">Shopping List</string>
 </resources>
