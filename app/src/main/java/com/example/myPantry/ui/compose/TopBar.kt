@@ -1,28 +1,33 @@
 package com.example.myPantry.ui.compose
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.graphics.shapes.RoundedPolygon
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 
 @Composable
 fun TopBar(
@@ -31,7 +36,10 @@ fun TopBar(
     stepHeight: Dp,
     stepLength: Dp,
     curveRadius: Dp = 24.dp,
-    color: Color
+    color: Color,
+    fontSize: TextUnit,
+    navController: NavController,
+    currentDestination: NavDestination?
 ) {
     val density = LocalDensity.current
     val stepHeightPx = with(density) { stepHeight.toPx() }
@@ -76,6 +84,51 @@ fun TopBar(
                 close()
             }
             drawPath(path, color = color)
+        }
+
+        Box(modifier = Modifier
+            .height(stepHeight + curveRadius + curveRadius)
+            .width(LocalWindowInfo.current.containerSize.width.dp - stepLength - curveRadius)
+            .align(Alignment.BottomStart)
+            .padding(10.dp)
+        ) {
+            // TODO: add usernames
+            var titleMsg = "Welcome, User!"
+            allScreens.forEach { screen ->
+                if (currentDestination?.route == screen.route) {
+                    titleMsg = stringResource(screen.labelId)
+                }
+            }
+            Text(
+                modifier = Modifier.align(Alignment.CenterStart),
+                fontWeight = FontWeight.Normal,
+                style = MaterialTheme.typography.headlineMedium,
+                fontSize = fontSize,
+                text = titleMsg
+            )
+        }
+
+        Box(modifier = Modifier
+            .height(stepHeight + curveRadius + curveRadius)
+            .width(stepLength + curveRadius)
+            .align(Alignment.BottomEnd)
+            .padding(10.dp)
+        ) {
+            IconButton(
+                onClick = {
+                    navController.navigate(Screen.Profile.route) {
+                        launchSingleTop = true
+                    }
+                },
+                enabled = true
+            ) {
+                Icon(
+                    painter = painterResource(Screen.Profile.unselectedIcon),
+                    contentDescription = stringResource(Screen.Profile.labelId),
+                    modifier = Modifier.fillMaxSize(),
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
         }
     }
 }

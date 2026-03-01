@@ -57,6 +57,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.graphics.shapes)
     implementation(libs.androidx.compose.ui.geometry)
+    implementation(libs.androidx.compose.ui.text.google.fonts)
+    implementation(libs.androidx.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -64,6 +66,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.guava)
+    implementation("androidx.compose.ui:ui-text-google-fonts")
 
     // Room dependencies
     implementation(libs.androidx.room.runtime)

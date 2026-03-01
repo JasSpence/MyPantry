@@ -3,5 +3,6 @@
     <string name="home_label">Home</string>
     <string name="pantry_label">Pantry</string>
     <string name="recipes_label">Recipes</string>
+    <string name="profile_label">Profile</string>
     <string name="shopping_list_label">Shopping List</string>
 </resources>

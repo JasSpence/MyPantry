@@ -13,7 +13,7 @@ fun MainNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Pantry.route,
+        startDestination = Screen.Home.route,
         modifier = modifier
     ) {
         composable(route=Screen.Home.route) {
@@ -27,6 +27,9 @@ fun MainNavHost(
         }
         composable(route=Screen.ShoppingList.route) {
             ShoppingListScreen()
+        }
+        composable(route=Screen.Profile.route) {
+            ProfileScreen()
         }
     }
 }

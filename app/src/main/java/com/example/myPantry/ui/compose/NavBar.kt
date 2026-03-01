@@ -2,6 +2,7 @@ package com.example.myPantry.ui.compose
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -17,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -55,6 +57,7 @@ fun NavBar(
                     Text(
                         text = label,
                         color = MaterialTheme.colorScheme.onPrimary,
+                        fontSize = 12.sp,
                         fontWeight = if (isSelected) {
                             FontWeight.Bold
                         } else {
