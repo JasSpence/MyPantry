@@ -15,7 +15,7 @@ fun MainNavHost(
     viewModel: MainViewModel,
     modifier: Modifier = Modifier
 ) {
-    val pantryItems by viewModel.pantryItems.collectAsStateWithLifecycle()
+    val pantryItemsWithInstances by viewModel.pantryItemsWithInstances.collectAsStateWithLifecycle()
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
@@ -25,7 +25,7 @@ fun MainNavHost(
             HomeScreen()
         }
         composable(route=Screen.Pantry.route) {
-            PantryScreen(pantryItems)
+            PantryScreen(pantryItemsWithInstances)
         }
         composable(route=Screen.Recipes.route) {
             RecipesScreen()

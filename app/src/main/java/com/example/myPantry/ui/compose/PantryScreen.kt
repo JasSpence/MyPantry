@@ -9,18 +9,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.myPantry.data.PantryItem
+import com.example.myPantry.data.entites.PantryItem
+import com.example.myPantry.data.entites.PantryItemInstance
+import com.example.myPantry.data.entites.relationships.PantryItemWithInstances
+import kotlin.time.Instant
 
 @Composable
 fun PantryScreen(
-    pantryItems: List<PantryItem>,
+    pantryItemsWithInstances: List<PantryItemWithInstances>,
     modifier: Modifier = Modifier,
 
-) {
+    ) {
     LazyVerticalGrid(
         modifier = modifier.fillMaxSize(),
         columns = GridCells.Fixed(2)
-    ) { items (pantryItems) {
+    ) { items (pantryItemsWithInstances) {
             PantryItemBox(
                 item = it
             )
@@ -30,27 +33,46 @@ fun PantryScreen(
 
 @Composable
 fun PantryItemBox(
-    item: PantryItem,
+    item: PantryItemWithInstances,
     modifier: Modifier = Modifier
 ) {
     ElevatedCard(
         modifier = modifier
     ) {
-        Text(item.name)
+        Text(item.pantryItem.name)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PantryScreenPreview() {
-    val pantryItems = listOf(
-        PantryItem(
-            name = "bread",
-            quantity = 1
-        ),
-        PantryItem(
-            name = "banana"
-        )
+    val pantryItem1 = PantryItem(
+        name = "bread"
     )
-    PantryScreen(pantryItems)
+    val pantryItem2 = PantryItem(
+        name = "banana"
+    )
+    val pantryItemsWithInstances = listOf(
+        PantryItemWithInstances(
+            pantryItem = pantryItem1,
+            instances = listOf(
+                PantryItemInstance(
+                    pantryItem = pantryItem1.id
+                ),
+                PantryItemInstance(
+                    pantryItem = pantryItem1.id,
+                    expiryDate = Instant.DISTANT_FUTURE
+                )
+            )
+        ),
+        PantryItemWithInstances(
+            pantryItem = pantryItem2,
+            instances = listOf(
+                PantryItemInstance(
+                    pantryItem = pantryItem2.id
+                )
+            )
+        ),
+    )
+    PantryScreen(pantryItemsWithInstances)
 }

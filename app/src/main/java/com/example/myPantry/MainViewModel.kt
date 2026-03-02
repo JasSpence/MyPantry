@@ -3,8 +3,8 @@ package com.example.myPantry
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.myPantry.data.PantryItem
 import com.example.myPantry.data.PantryRepo
+import com.example.myPantry.data.entites.relationships.PantryItemWithInstances
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -13,7 +13,7 @@ class MainViewModel(
     pantryRepo: PantryRepo
 ) : ViewModel() {
 
-    val pantryItems: StateFlow<List<PantryItem>> = pantryRepo.pantryItems
+    val pantryItemsWithInstances: StateFlow<List<PantryItemWithInstances>> = pantryRepo.pantryItemsWithInstances
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
