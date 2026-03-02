@@ -13,12 +13,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.myPantry.data.PantryRepo
 import com.example.myPantry.ui.compose.MainNavHost
 import com.example.myPantry.ui.compose.NavBar
 import com.example.myPantry.ui.compose.TopBar
@@ -36,11 +38,16 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyPantryApp() {
-    MyPantryTheme {
+    MyPantryTheme(dynamicColor = false) {
         val navController = rememberNavController()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
-//        val viewModel: MainViewModel = viewModel<MainViewModel>()
+        val context = LocalContext.current
+        val viewModel: MainViewModel = viewModel(
+            factory = MainViewModelFactory(
+                PantryRepo(context = context)
+            )
+        )
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
@@ -49,7 +56,6 @@ fun MyPantryApp() {
                     stepHeight = 10.dp,
                     stepLength = 40.dp,
                     color = MaterialTheme.colorScheme.primary,
-                    fontSize = 30.sp,
                     navController = navController,
                     currentDestination = currentDestination
                 )
@@ -69,6 +75,7 @@ fun MyPantryApp() {
         ) { innerPadding ->
             MainNavHost(
                 navController = navController,
+                viewModel = viewModel,
                 modifier = Modifier.padding(innerPadding)
             )
         }

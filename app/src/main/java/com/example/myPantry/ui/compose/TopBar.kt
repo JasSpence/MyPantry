@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -20,12 +21,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 
@@ -37,7 +35,6 @@ fun TopBar(
     stepLength: Dp,
     curveRadius: Dp = 24.dp,
     color: Color,
-    fontSize: TextUnit,
     navController: NavController,
     currentDestination: NavDestination?
 ) {
@@ -101,9 +98,10 @@ fun TopBar(
             }
             Text(
                 modifier = Modifier.align(Alignment.CenterStart),
-                fontWeight = FontWeight.Normal,
                 style = MaterialTheme.typography.headlineMedium,
-                fontSize = fontSize,
+                autoSize = TextAutoSize.StepBased(10.sp, 40.sp),
+                maxLines = 1,
+                color = MaterialTheme.colorScheme.primary,
                 text = titleMsg
             )
         }

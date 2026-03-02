@@ -6,10 +6,10 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface PantryDao {
-    @Query("SELECT * FROM pantry")
-    fun getAll(): Flow<List<PantryItem>>
+interface RecipeDao {
+    @Query("SELECT * FROM recipes")
+    fun getAll(): Flow<List<RecipeItem>>
 
     @Insert
-    fun insertAll(vararg items: PantryItem)
+    fun insertAll(vararg items: RecipeItem)
 }

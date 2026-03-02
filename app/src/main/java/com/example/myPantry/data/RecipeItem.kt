@@ -5,9 +5,10 @@ import androidx.room.PrimaryKey
 
 // TODO: Consider supporting full-text search through FTS3 or FTS4 (see https://developer.android.com/training/data-storage/room/defining-data)
 
-@Entity(tableName = "pantry")
-data class PantryItem(
+@Entity(tableName = "recipes")
+data class RecipeItem(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val quantity: Int? = null
+    val ingredients: List<String>,
+    val steps: List<String>
 )

@@ -22,5 +22,5 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    PantryScreen()
+    ProfileScreen()
 }

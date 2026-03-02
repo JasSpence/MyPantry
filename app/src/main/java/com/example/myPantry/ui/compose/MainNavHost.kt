@@ -1,16 +1,21 @@
 package com.example.myPantry.ui.compose
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.myPantry.MainViewModel
 
 @Composable
 fun MainNavHost(
     navController: NavHostController,
+    viewModel: MainViewModel,
     modifier: Modifier = Modifier
 ) {
+    val pantryItems by viewModel.pantryItems.collectAsStateWithLifecycle()
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
@@ -20,7 +25,7 @@ fun MainNavHost(
             HomeScreen()
         }
         composable(route=Screen.Pantry.route) {
-            PantryScreen()
+            PantryScreen(pantryItems)
         }
         composable(route=Screen.Recipes.route) {
             RecipesScreen()

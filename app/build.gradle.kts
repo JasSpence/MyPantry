@@ -67,7 +67,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.guava)
-    implementation("androidx.compose.ui:ui-text-google-fonts")
 
     // Room dependencies
     implementation(libs.androidx.room.runtime)
