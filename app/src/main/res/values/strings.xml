@@ -5,4 +5,5 @@
     <string name="recipes_label">Recipes</string>
     <string name="profile_label">Profile</string>
     <string name="shopping_list_label">Shopping List</string>
+    <string name="add_item_label">Add Item</string>
 </resources>
