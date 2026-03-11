@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.myPantry.data.PantryRepo
 import com.example.myPantry.data.entites.relationships.PantryItemWithInstances
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -20,6 +21,12 @@ class MainViewModel(
             initialValue = emptyList()
         )
 
+    private val _pantryGridViewSelected = MutableStateFlow<Boolean>(true)
+    val pantryGridViewSelected: StateFlow<Boolean> = _pantryGridViewSelected
+
+    fun setPantryView (isGrid: Boolean) {
+        _pantryGridViewSelected.value = isGrid
+    }
 }
 
 class MainViewModelFactory(

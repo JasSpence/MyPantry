@@ -13,10 +13,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PantryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllPantryItems(vararg items: PantryItem)
+    suspend fun insertAllPantryItems(vararg items: PantryItem)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllPantryItemInstances(vararg items: PantryItemInstance)
+    suspend fun insertAllPantryItemInstances(vararg items: PantryItemInstance)
 
     @Transaction
     @Query("SELECT * FROM pantry_item")

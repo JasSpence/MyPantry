@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.geometry)
     implementation(libs.androidx.compose.ui.text.google.fonts)
     implementation(libs.androidx.compiler)
+    implementation(libs.androidx.compose.foundation)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,6 +68,10 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.guava)
+
+    // coil dependencies
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
     // Room dependencies
     implementation(libs.androidx.room.runtime)
