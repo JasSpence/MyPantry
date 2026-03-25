@@ -67,8 +67,7 @@ fun MyPantryApp() {
                 ) {
                     NavBar(
                         navController = navController,
-                        currentDestination = currentDestination,
-                        modifier = Modifier.padding(10.dp, 0.dp)
+                        currentDestination = currentDestination
                     )
                 }
             }
