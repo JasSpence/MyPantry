@@ -18,16 +18,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
@@ -43,7 +40,7 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
 //    val pickMedia = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) {}
 //    pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     Box (
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(10.dp)
     ) {
@@ -100,7 +97,7 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
                 )
             }
             // Adds empty space for save button
-            Spacer(modifier = modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(60.dp))
         }
         Column(
             modifier = Modifier
@@ -108,8 +105,10 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.End
         ) {
-            SubmitItemBox(
-                onSubmitItemClick = {}
+            ActionBox(
+                iconId = R.drawable.save_icon,
+                action = "save",
+                onBoxClick = {}
             )
         }
     }
@@ -118,10 +117,11 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
 @Composable
 fun CarouselSelector(
     name: String,
-    options: List<CarouselOption>
+    options: List<CarouselOption>,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(5.dp),
     ) {
@@ -141,8 +141,21 @@ fun CarouselSelector(
                     .padding(10.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                items(6) {
-                    CarouselItem(CarouselOption("-", "-"))
+                items(3) {
+                    CarouselItem(
+                        CarouselOption(
+                            name = "Option Name",
+                            image = "-"
+                        )
+                    )
+                }
+                item {
+                    CarouselItem(
+                        CarouselOption(
+                            name = "Add new ${name.lowercase()}",
+                            image = "-"
+                        )
+                    )
                 }
             }
         }
@@ -180,40 +193,13 @@ fun CarouselItem(
                     Text("Option Image")
                 }
             }
-//            Text(option.name)
             Text(
-                text = "Option Name",
+                text = option.name,
                 color = MaterialTheme.colorScheme.onTertiary,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center
             )
         }
-    }
-}
-
-@Composable
-fun SubmitItemBox(
-    modifier: Modifier = Modifier,
-    onSubmitItemClick: () -> Unit
-) {
-    FilledIconButton(
-        onClick = onSubmitItemClick,
-        modifier = modifier
-            .size(60.dp),
-        shape = RoundedCornerShape(12.dp),
-        colors = IconButtonColors(
-            containerColor = MaterialTheme.colorScheme.secondary,
-            contentColor = MaterialTheme.colorScheme.onSecondary,
-            disabledContainerColor = MaterialTheme.colorScheme.error,
-            disabledContentColor = MaterialTheme.colorScheme.onError,
-        )
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.save_icon),
-            contentDescription = "save",
-            modifier = modifier
-                .fillMaxSize()
-                .padding(10.dp)
-        )
     }
 }
 

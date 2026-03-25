@@ -18,6 +18,7 @@ fun MainNavHost(
     val pantryItemsWithInstances by viewModel.pantryItemsWithInstances.collectAsStateWithLifecycle()
     val pantryItemQuantities by viewModel.pantryItemQuantities.collectAsStateWithLifecycle()
     val pantryGridSelected by viewModel.pantryGridViewSelected.collectAsStateWithLifecycle()
+    val recipesGridSelected by viewModel.recipesGridViewSelected.collectAsStateWithLifecycle()
 
     NavHost(
         navController = navController,
@@ -36,8 +37,13 @@ fun MainNavHost(
                 onAddItemClick = { navController.navigate(Screen.AddItem.route) }
             )
         }
-        composable(route=Screen.Recipes.route) {
-            RecipesScreen()
+        composable(route=Screen.AllRecipes.route) {
+            AllRecipesScreen(
+                gridSelected = recipesGridSelected,
+                changeView = { viewModel.setRecipesView(it) },
+                onRecipeBoxClick = { navController.navigate(Screen.Recipe.route)},
+                onAddBoxClicked = { navController.navigate(Screen.AddRecipe.route )}
+            )
         }
         composable(route=Screen.ShoppingList.route) {
             ShoppingListScreen()
@@ -47,6 +53,12 @@ fun MainNavHost(
         }
         composable(route=Screen.AddItem.route) {
             AddItemScreen()
+        }
+        composable(route=Screen.AddRecipe.route) {
+            AddRecipeScreen()
+        }
+        composable(route=Screen.Recipe.route) {
+            RecipeScreen()
         }
     }
 }

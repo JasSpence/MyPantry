@@ -16,13 +16,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,7 +53,7 @@ fun PantryScreen(
     modifier: Modifier = Modifier,
     ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(10.dp)
     ) {
@@ -65,12 +62,12 @@ fun PantryScreen(
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            TopMenu(
+            PantryTopMenu(
                 gridSelected = gridSelected,
                 changeView = changeView
             )
             LazyVerticalGrid(
-                modifier = modifier
+                modifier = Modifier
                     .weight(1f),
                 columns = if (gridSelected) GridCells.Fixed(2) else GridCells.Fixed(1)
             ) {
@@ -105,42 +102,17 @@ fun PantryScreen(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.End
         ) {
-            AddItemBox(
-                onAddItemClick = onAddItemClick
+            ActionBox(
+                iconId = R.drawable.add_icon,
+                action = "add item",
+                onBoxClick = onAddItemClick
             )
         }
     }
 }
 
 @Composable
-fun AddItemBox(
-    modifier: Modifier = Modifier,
-    onAddItemClick: () -> Unit
-) {
-    FilledIconButton(
-        onClick = onAddItemClick,
-        modifier = modifier
-            .size(60.dp),
-        shape = RoundedCornerShape(12.dp),
-        colors = IconButtonColors(
-            containerColor = MaterialTheme.colorScheme.secondary,
-            contentColor = MaterialTheme.colorScheme.onSecondary,
-            disabledContainerColor = MaterialTheme.colorScheme.error,
-            disabledContentColor = MaterialTheme.colorScheme.onError,
-        )
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.add_icon),
-            contentDescription = "add",
-            modifier = modifier
-                .fillMaxSize()
-                .padding(10.dp)
-        )
-    }
-}
-
-@Composable
-fun TopMenu(
+fun PantryTopMenu(
     modifier: Modifier = Modifier,
     gridSelected: Boolean,
     changeView: (Boolean) -> Unit
@@ -165,7 +137,7 @@ fun TopMenu(
                     painterResource(R.drawable.unselected_grid_view_icon)
                 },
                 contentDescription = "grid view",
-                modifier = modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 tint = MaterialTheme.colorScheme.secondary
             )
         }
@@ -180,7 +152,7 @@ fun TopMenu(
                     painterResource(R.drawable.selected_row_view_icon)
                 },
                 contentDescription = "row view",
-                modifier = modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 tint = MaterialTheme.colorScheme.secondary
             )
         }
@@ -199,7 +171,7 @@ fun PantryItemGridBoxPlaceholder(
         )
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .padding(5.dp, 75.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -221,7 +193,7 @@ fun PantryItemRowBoxPlaceholder(
         )
     ) {
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp, 40.dp),
             horizontalArrangement = Arrangement.Start,
@@ -285,7 +257,7 @@ fun PantryItemRowBox(
         )
     ) {
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
             horizontalArrangement = Arrangement.Start,

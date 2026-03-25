@@ -40,7 +40,6 @@ fun NavBar(
                             painterResource(screen.unselectedIcon)
                         },
                         contentDescription = label,
-                        modifier = modifier,
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
                 },

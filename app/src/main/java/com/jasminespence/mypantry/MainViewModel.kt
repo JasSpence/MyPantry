@@ -36,6 +36,13 @@ class MainViewModel(
     fun setPantryView (isGrid: Boolean) {
         _pantryGridViewSelected.value = isGrid
     }
+
+    private val _recipesGridViewSelected = MutableStateFlow(true)
+    val recipesGridViewSelected: StateFlow<Boolean> = _recipesGridViewSelected
+
+    fun setRecipesView (isGrid: Boolean) {
+        _recipesGridViewSelected.value = isGrid
+    }
 }
 
 class MainViewModelFactory(

@@ -2,8 +2,10 @@
     <string name="app_name">My Pantry</string>
     <string name="home_label">Home</string>
     <string name="pantry_label">Pantry</string>
-    <string name="recipes_label">Recipes</string>
+    <string name="all_recipes_label">Recipes</string>
     <string name="profile_label">Profile</string>
     <string name="shopping_list_label">Shopping List</string>
     <string name="add_item_label">Add Item</string>
+    <string name="add_recipe_label">Add Recipe</string>
+    <string name="recipe_label">Recipe</string>
 </resources>
