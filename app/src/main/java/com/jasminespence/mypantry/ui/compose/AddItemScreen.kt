@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
@@ -140,21 +141,35 @@ fun CarouselSelector(
                 horizontalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp)
             ) {
                 items(3) {
-                    PhotoWithTextCard(
+                    PhotoWithColComposableCard(
                         photo = "-",
-                        text = "Option Name",
                         modifier = Modifier
                             .fillMaxHeight()
-                            .width(Dimensions.BASE_GRID_VIEW_WIDTH.dp)
+                            .width(Dimensions.BASE_GRID_VIEW_WIDTH.dp),
+                        composable = {
+                            Text(
+                                text = "Option Name",
+                                color = MaterialTheme.colorScheme.onTertiary,
+                                style = MaterialTheme.typography.bodyMedium,
+                                textAlign = TextAlign.Center
+                            )
+                        }
                     )
                 }
                 item {
-                    PhotoWithTextCard(
+                    PhotoWithColComposableCard(
                         photo = "-",
-                        text = "Add new ${name.lowercase()}",
                         modifier = Modifier
                             .fillMaxHeight()
-                            .width(Dimensions.BASE_GRID_VIEW_WIDTH.dp)
+                            .width(Dimensions.BASE_GRID_VIEW_WIDTH.dp),
+                        composable = {
+                            Text(
+                                text = "Add new ${name.lowercase()}",
+                                color = MaterialTheme.colorScheme.onTertiary,
+                                style = MaterialTheme.typography.bodyMedium,
+                                textAlign = TextAlign.Center
+                            )
+                        }
                     )
                 }
             }

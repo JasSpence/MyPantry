@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
@@ -61,11 +61,13 @@ fun AllRecipesScreen(
                 items(8) {
                     if (isGridSelected) {
                         RecipeGridBoxPlaceholder(
-                            onRecipeBoxClick
+                            hasIngredients = listOf(true, false).random(),
+                            onRecipeBoxClick = onRecipeBoxClick
                         )
                     } else {
                         RecipeRowBoxPlaceholder(
-                            onRecipeBoxClick
+                            hasIngredients = listOf(true, false).random(),
+                            onRecipeBoxClick = onRecipeBoxClick
                         )
                     }
                 }
@@ -140,48 +142,129 @@ fun RecipesTopMenu(
 
 @Composable
 fun RecipeGridBoxPlaceholder(
+    hasIngredients: Boolean,
     onRecipeBoxClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    PhotoWithTextCard(
+    PhotoWithColComposableCard(
         photo = "-",
-        text = "Recipe Name",
         onClick = onRecipeBoxClick,
         modifier = modifier
-            .height(Dimensions.BASE_GRID_VIEW_HEIGHT.dp)
+            .height(Dimensions.BASE_GRID_VIEW_HEIGHT.dp),
+        composable = {
+            Text(
+                text = "Recipe Name",
+                color = MaterialTheme.colorScheme.onTertiary,
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.timer_icon),
+                        contentDescription = "recipe time",
+                        tint = MaterialTheme.colorScheme.onTertiary
+                    )
+                    Text(
+                        text = "Time",
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Center
+                    )
+                }
+                if (hasIngredients) {
+                    Icon(
+                        painter = painterResource(R.drawable.tick_icon),
+                        contentDescription = "you have all ingredients",
+                        tint = Color.Green
+                    )
+                } else {
+                    Icon(
+                        painter = painterResource(R.drawable.cross_icon),
+                        contentDescription = "you do not have all ingredients",
+                        tint = Color.Red
+                    )
+                }
+            }
+        }
     )
 }
 
 @Composable
 fun RecipeRowBoxPlaceholder(
+    hasIngredients: Boolean,
     onRecipeBoxClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    ElevatedCard(
+    PhotoWithRowComposableCard(
+        photo = "-",
+        onClick = onRecipeBoxClick,
         modifier = modifier
-            .height(Dimensions.BASE_ROW_VIEW_HEIGHT.dp)
-            .padding(Dimensions.MAIN_PADDING.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiary
-        ),
-        onClick = onRecipeBoxClick
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("Recipe Placeholder")
+            .height(Dimensions.BASE_ROW_VIEW_HEIGHT.dp),
+        composable = {
+            Text(
+                text = "Recipe Name",
+                color = MaterialTheme.colorScheme.onTertiary,
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight(),
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(
+                        Dimensions.SUB_PADDING.dp,
+                        Alignment.End
+                    )
+                ) {
+                    Text(
+                        text = "Time",
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Center
+                    )
+                    Icon(
+                        painter = painterResource(R.drawable.timer_icon),
+                        contentDescription = "recipe time",
+                        tint = MaterialTheme.colorScheme.onTertiary
+                    )
+                }
+                if (hasIngredients) {
+                    Icon(
+                        painter = painterResource(R.drawable.tick_icon),
+                        contentDescription = "you have all ingredients",
+                        tint = Color.Green
+                    )
+                } else {
+                    Icon(
+                        painter = painterResource(R.drawable.cross_icon),
+                        contentDescription = "you do not have all ingredients",
+                        tint = Color.Red
+                    )
+                }
+            }
         }
-    }
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun AllRecipesScreenPreview() {
     AllRecipesScreen(
-        isGridSelected = true,
+        isGridSelected = false,
         changeView = {},
         onRecipeBoxClick = {},
         onAddBoxClicked = {}

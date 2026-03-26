@@ -70,7 +70,7 @@ fun RecipeScreen(
                     name = "Ingredients",
                     listRow = {
                         IngredientRow(
-                            hasItem = false
+                            hasItem = listOf(true, false).random()
                         )
                     }
                 )
