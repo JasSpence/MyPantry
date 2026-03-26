@@ -12,9 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.jasminespence.mypantry.ui.theme.Dimensions
 
 @Composable
-fun ActionBox(
+fun ActionButton(
     iconId: Int,
     action: String,
     onBoxClick: () -> Unit,
@@ -23,8 +24,8 @@ fun ActionBox(
     FilledIconButton(
         onClick = onBoxClick,
         modifier = modifier
-            .size(60.dp),
-        shape = RoundedCornerShape(12.dp),
+            .size(Dimensions.ACTION_BUTTON_DIMS.dp),
+        shape = RoundedCornerShape(Dimensions.CORNER_ROUNDING.dp),
         colors = IconButtonColors(
             containerColor = MaterialTheme.colorScheme.secondary,
             contentColor = MaterialTheme.colorScheme.onSecondary,
@@ -37,7 +38,7 @@ fun ActionBox(
             contentDescription = action,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(10.dp)
+                .padding(Dimensions.MAIN_PADDING.dp)
         )
     }
 }

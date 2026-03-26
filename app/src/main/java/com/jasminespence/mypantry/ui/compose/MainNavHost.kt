@@ -17,8 +17,9 @@ fun MainNavHost(
 ) {
     val pantryItemsWithInstances by viewModel.pantryItemsWithInstances.collectAsStateWithLifecycle()
     val pantryItemQuantities by viewModel.pantryItemQuantities.collectAsStateWithLifecycle()
-    val pantryGridSelected by viewModel.pantryGridViewSelected.collectAsStateWithLifecycle()
-    val recipesGridSelected by viewModel.recipesGridViewSelected.collectAsStateWithLifecycle()
+    val isPantryGridSelected by viewModel.isPantryGridViewSelected.collectAsStateWithLifecycle()
+    val selectedPantryItem by viewModel.pantryItemSelected.collectAsStateWithLifecycle()
+    val isRecipesGridSelected by viewModel.isRecipesGridViewSelected.collectAsStateWithLifecycle()
 
     NavHost(
         navController = navController,
@@ -32,14 +33,16 @@ fun MainNavHost(
             PantryScreen(
                 pantryItemsWithInstances = pantryItemsWithInstances,
                 pantryItemQuantities = pantryItemQuantities,
-                gridSelected = pantryGridSelected,
+                isGridSelected = isPantryGridSelected,
                 changeView = { viewModel.setPantryView(it) },
+                selectedPantryItem = selectedPantryItem,
+                onPantryItemClick = { viewModel.setSelectedPantryItem(it) },
                 onAddItemClick = { navController.navigate(Screen.AddItem.route) }
             )
         }
         composable(route=Screen.AllRecipes.route) {
             AllRecipesScreen(
-                gridSelected = recipesGridSelected,
+                isGridSelected = isRecipesGridSelected,
                 changeView = { viewModel.setRecipesView(it) },
                 onRecipeBoxClick = { navController.navigate(Screen.Recipe.route)},
                 onAddBoxClicked = { navController.navigate(Screen.AddRecipe.route )}

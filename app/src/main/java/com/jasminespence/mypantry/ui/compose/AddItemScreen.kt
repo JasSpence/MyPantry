@@ -16,18 +16,16 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
+import com.jasminespence.mypantry.ui.theme.Dimensions
 import kotlin.collections.emptyList
 
 data class CarouselOption(
@@ -42,21 +40,22 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
     Box (
         modifier = modifier
             .fillMaxSize()
-            .padding(10.dp)
+            .padding(Dimensions.MAIN_PADDING.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val baseImageSize = 50
-            val baseFormHeight = 40
             Box(
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.secondary)
-                    .size((baseImageSize * 3).dp, (baseImageSize * 4).dp)
+                    .size(
+                        width = (Dimensions.BASE_BIG_IMG_SIZE * Dimensions.IMG_ASPECT_RATIO_SHORT).dp,
+                        height =(Dimensions.BASE_BIG_IMG_SIZE * Dimensions.IMG_ASPECT_RATIO_LONG).dp
+                    )
             ) {
                 Text("Item Image")
             }
@@ -64,7 +63,7 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.secondary)
                     .fillMaxWidth()
-                    .height(baseFormHeight.dp)
+                    .height(Dimensions.BASE_FORM_HEIGHT.dp)
             ) {
                 Text("Item Name")
             }
@@ -72,14 +71,13 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.secondary)
                     .fillMaxWidth()
-                    .height(baseFormHeight.dp)
+                    .height(Dimensions.BASE_FORM_HEIGHT.dp)
             ) {
                 Text("Min Item Stock Required")
             }
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
             ) {
                 CarouselSelector(
                     name = "Storage Location",
@@ -89,7 +87,6 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
             ) {
                 CarouselSelector(
                     name = "Category",
@@ -97,7 +94,7 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
                 )
             }
             // Adds empty space for save button
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(Dimensions.ACTION_BUTTON_DIMS.dp))
         }
         Column(
             modifier = Modifier
@@ -105,7 +102,7 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.End
         ) {
-            ActionBox(
+            ActionButton(
                 iconId = R.drawable.save_icon,
                 action = "save",
                 onBoxClick = {}
@@ -122,8 +119,9 @@ fun CarouselSelector(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(5.dp),
+            .fillMaxSize()
+            .height(Dimensions.BASE_GRID_VIEW_HEIGHT.dp),
+        verticalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp),
     ) {
         Text(
             text = name,
@@ -132,73 +130,34 @@ fun CarouselSelector(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .clip(RoundedCornerShape(12.dp))
+                .clip(RoundedCornerShape(Dimensions.CORNER_ROUNDING.dp))
                 .background(MaterialTheme.colorScheme.tertiaryContainer),
         ) {
             LazyRow(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(10.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    .padding(Dimensions.MAIN_PADDING.dp),
+                horizontalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp)
             ) {
                 items(3) {
-                    CarouselItem(
-                        CarouselOption(
-                            name = "Option Name",
-                            image = "-"
-                        )
+                    PhotoWithTextCard(
+                        photo = "-",
+                        text = "Option Name",
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(Dimensions.BASE_GRID_VIEW_WIDTH.dp)
                     )
                 }
                 item {
-                    CarouselItem(
-                        CarouselOption(
-                            name = "Add new ${name.lowercase()}",
-                            image = "-"
-                        )
+                    PhotoWithTextCard(
+                        photo = "-",
+                        text = "Add new ${name.lowercase()}",
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(Dimensions.BASE_GRID_VIEW_WIDTH.dp)
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun CarouselItem(
-    option: CarouselOption,
-    modifier: Modifier = Modifier
-) {
-    ElevatedCard(
-        modifier = modifier
-            .fillMaxHeight()
-            .width(140.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiary
-        )
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(5.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(5.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.secondary)
-                ) {
-                    Text("Option Image")
-                }
-            }
-            Text(
-                text = option.name,
-                color = MaterialTheme.colorScheme.onTertiary,
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center
-            )
         }
     }
 }

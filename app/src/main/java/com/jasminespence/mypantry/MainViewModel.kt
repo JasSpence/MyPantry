@@ -30,18 +30,25 @@ class MainViewModel(
             initialValue = emptyMap()
         )
 
-    private val _pantryGridViewSelected = MutableStateFlow(true)
-    val pantryGridViewSelected: StateFlow<Boolean> = _pantryGridViewSelected
+    private val _isPantryGridViewSelected = MutableStateFlow(true)
+    val isPantryGridViewSelected: StateFlow<Boolean> = _isPantryGridViewSelected
 
     fun setPantryView (isGrid: Boolean) {
-        _pantryGridViewSelected.value = isGrid
+        _isPantryGridViewSelected.value = isGrid
     }
 
-    private val _recipesGridViewSelected = MutableStateFlow(true)
-    val recipesGridViewSelected: StateFlow<Boolean> = _recipesGridViewSelected
+    private val _pantryItemSelected: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val pantryItemSelected: StateFlow<Int?> = _pantryItemSelected
+
+    fun setSelectedPantryItem (selectedItem: Int?) {
+        _pantryItemSelected.value = selectedItem
+    }
+
+    private val _isRecipesGridViewSelected = MutableStateFlow(true)
+    val isRecipesGridViewSelected: StateFlow<Boolean> = _isRecipesGridViewSelected
 
     fun setRecipesView (isGrid: Boolean) {
-        _recipesGridViewSelected.value = isGrid
+        _isRecipesGridViewSelected.value = isGrid
     }
 }
 

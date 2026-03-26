@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
+import com.jasminespence.mypantry.ui.theme.Dimensions
 
 @Composable
 fun RecipeScreen(
@@ -34,21 +35,22 @@ fun RecipeScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(10.dp)
+            .padding(Dimensions.MAIN_PADDING.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val baseImageSize = 50
-            val baseInputHeight = 40
             Box(
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.secondary)
-                    .size((baseImageSize * 3).dp, (baseImageSize * 4).dp)
+                    .size(
+                        width = (Dimensions.BASE_BIG_IMG_SIZE * Dimensions.IMG_ASPECT_RATIO_SHORT).dp,
+                        height =(Dimensions.BASE_BIG_IMG_SIZE * Dimensions.IMG_ASPECT_RATIO_LONG).dp
+                    )
             ) {
                 Text("Recipe Image")
             }
@@ -56,7 +58,7 @@ fun RecipeScreen(
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.secondary)
                     .fillMaxWidth()
-                    .height(baseInputHeight.dp)
+                    .height(Dimensions.BASE_FORM_HEIGHT.dp)
             ) {
                 Text("Recipe Name")
             }
@@ -68,7 +70,6 @@ fun RecipeScreen(
                     name = "Ingredients",
                     listRow = {
                         IngredientRow(
-                            baseInputHeight = baseInputHeight,
                             hasItem = false
                         )
                     }
@@ -81,9 +82,7 @@ fun RecipeScreen(
                 AddList(
                     name = "Method",
                     listRow = {
-                        MethodRow(
-                            baseInputHeight
-                        )
+                        MethodRow()
                     }
                 )
             }
@@ -99,7 +98,7 @@ fun List(
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(5.dp)
+        verticalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
     ) {
         Text(
             text = name,
@@ -107,7 +106,7 @@ fun List(
         )
         Column(
             modifier = modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp)
         ) {
             for (i in 1..3) {
                 listRow()
@@ -118,20 +117,19 @@ fun List(
 
 @Composable
 fun IngredientRow(
-    baseInputHeight: Int,
     hasItem: Boolean,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(baseInputHeight.dp),
-        horizontalArrangement = Arrangement.spacedBy(5.dp)
+            .height(Dimensions.BASE_FORM_HEIGHT.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .width(baseInputHeight.dp)
+                .width(Dimensions.BASE_FORM_HEIGHT.dp)
                 .background(MaterialTheme.colorScheme.secondary)
         ) {
             Text("Img")
@@ -140,7 +138,7 @@ fun IngredientRow(
             modifier = Modifier
                 .fillMaxHeight()
                 .background(MaterialTheme.colorScheme.secondary)
-                .padding(5.dp)
+                .padding(Dimensions.SUB_PADDING.dp)
         ) {
             Text("#")
         }
@@ -155,11 +153,11 @@ fun IngredientRow(
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .width(baseInputHeight.dp)
+                .width(Dimensions.BASE_FORM_HEIGHT.dp)
         ) {
             val iconModifier = Modifier
                 .fillMaxSize()
-                .padding(5.dp)
+                .padding(Dimensions.SUB_PADDING.dp)
             if (hasItem) {
                 Icon(
                     painter = painterResource(R.drawable.tick_icon),
@@ -181,12 +179,11 @@ fun IngredientRow(
 
 @Composable
 fun MethodRow(
-    baseInputHeight: Int,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
-            .defaultMinSize(minHeight = baseInputHeight.dp)
+            .defaultMinSize(minHeight = Dimensions.BASE_FORM_HEIGHT.dp)
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.secondary)
     ) {

@@ -27,10 +27,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
+import com.jasminespence.mypantry.ui.theme.Dimensions
 
 @Composable
 fun AllRecipesScreen(
-    gridSelected: Boolean,
+    isGridSelected: Boolean,
     changeView: (Boolean) -> Unit,
     onRecipeBoxClick: () -> Unit,
     onAddBoxClicked: () -> Unit,
@@ -39,24 +40,26 @@ fun AllRecipesScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(10.dp)
+            .padding(Dimensions.MAIN_PADDING.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp)
         ) {
             RecipesTopMenu(
-                gridSelected = gridSelected,
+                isGridSelected = isGridSelected,
                 changeView = changeView
             )
             LazyVerticalGrid(
                 modifier = Modifier
                     .weight(1f),
-                columns = if (gridSelected) GridCells.Fixed(2) else GridCells.Fixed(1)
+                columns = if (isGridSelected) GridCells.Fixed(2) else GridCells.Fixed(1),
+                verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
+                horizontalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
             ) {
                 items(8) {
-                    if (gridSelected) {
+                    if (isGridSelected) {
                         RecipeGridBoxPlaceholder(
                             onRecipeBoxClick
                         )
@@ -68,7 +71,7 @@ fun AllRecipesScreen(
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     // Adds empty space for save button
-                    Spacer(modifier = Modifier.height(60.dp))
+                    Spacer(modifier = Modifier.height(Dimensions.ACTION_BUTTON_DIMS.dp))
                 }
             }
         }
@@ -78,7 +81,7 @@ fun AllRecipesScreen(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.End
         ) {
-            ActionBox(
+            ActionButton(
                 iconId = R.drawable.add_icon,
                 action = "add recipe",
                 onBoxClick = onAddBoxClicked
@@ -90,14 +93,14 @@ fun AllRecipesScreen(
 @Composable
 fun RecipesTopMenu(
     modifier: Modifier = Modifier,
-    gridSelected: Boolean,
+    isGridSelected: Boolean,
     changeView: (Boolean) -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(30.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End),
+            .height(Dimensions.TOP_MENU_HEIGHT.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp, Alignment.End),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
@@ -107,7 +110,7 @@ fun RecipesTopMenu(
                 .aspectRatio(1f)
         ) {
             Icon(
-                painter = if (gridSelected) {
+                painter = if (isGridSelected) {
                     painterResource(R.drawable.selected_grid_view_icon)
                 } else {
                     painterResource(R.drawable.unselected_grid_view_icon)
@@ -122,7 +125,7 @@ fun RecipesTopMenu(
             modifier = Modifier.fillMaxHeight()
         ) {
             Icon(
-                painter = if (gridSelected) {
+                painter = if (isGridSelected) {
                     painterResource(R.drawable.unselected_row_view_icon)
                 } else {
                     painterResource(R.drawable.selected_row_view_icon)
@@ -140,23 +143,13 @@ fun RecipeGridBoxPlaceholder(
     onRecipeBoxClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    ElevatedCard(
+    PhotoWithTextCard(
+        photo = "-",
+        text = "Recipe Name",
+        onClick = onRecipeBoxClick,
         modifier = modifier
-            .padding(10.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiary
-        ),
-        onClick = onRecipeBoxClick
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(5.dp, 75.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text("Recipe Placeholder")
-        }
-    }
+            .height(Dimensions.BASE_GRID_VIEW_HEIGHT.dp)
+    )
 }
 
 @Composable
@@ -166,7 +159,8 @@ fun RecipeRowBoxPlaceholder(
 ) {
     ElevatedCard(
         modifier = modifier
-            .padding(10.dp, 10.dp),
+            .height(Dimensions.BASE_ROW_VIEW_HEIGHT.dp)
+            .padding(Dimensions.MAIN_PADDING.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.tertiary
         ),
@@ -174,8 +168,7 @@ fun RecipeRowBoxPlaceholder(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp, 40.dp),
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -188,7 +181,7 @@ fun RecipeRowBoxPlaceholder(
 @Composable
 fun AllRecipesScreenPreview() {
     AllRecipesScreen(
-        gridSelected = true,
+        isGridSelected = true,
         changeView = {},
         onRecipeBoxClick = {},
         onAddBoxClicked = {}
