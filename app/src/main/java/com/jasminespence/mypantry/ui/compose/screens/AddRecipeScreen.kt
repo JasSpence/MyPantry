@@ -163,7 +163,7 @@ fun AddMethodRow(
                 tint = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(0.dp,Dimensions.SMALL_BORDER.dp)
+                    .padding(0.dp,Dimensions.MEDIUM_BORDER.dp)
                     .aspectRatio(1f)
             )
         }

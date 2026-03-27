@@ -152,8 +152,7 @@ fun CarouselSelector(
                             Text(
                                 text = "Option Name",
                                 color = MaterialTheme.colorScheme.onTertiary,
-                                style = MaterialTheme.typography.bodyMedium,
-                                textAlign = TextAlign.Center
+                                style = MaterialTheme.typography.bodyMedium
                             )
                         }
                     )
@@ -168,8 +167,7 @@ fun CarouselSelector(
                             Text(
                                 text = "Add new ${name.lowercase()}",
                                 color = MaterialTheme.colorScheme.onTertiary,
-                                style = MaterialTheme.typography.bodyMedium,
-                                textAlign = TextAlign.Center
+                                style = MaterialTheme.typography.bodyMedium
                             )
                         }
                     )

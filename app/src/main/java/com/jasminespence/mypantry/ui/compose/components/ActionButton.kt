@@ -1,5 +1,6 @@
 package com.jasminespence.mypantry.ui.compose.components
 
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -39,6 +40,7 @@ fun ActionButton(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(Dimensions.BUTTON_PADDING.dp)
+                .aspectRatio(1f)
         )
     }
 }

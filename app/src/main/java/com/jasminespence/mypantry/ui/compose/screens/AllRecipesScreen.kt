@@ -158,8 +158,7 @@ fun RecipeGridBoxPlaceholder(
             Text(
                 text = "Recipe Name",
                 color = MaterialTheme.colorScheme.onTertiary,
-                style = MaterialTheme.typography.titleMedium,
-                textAlign = TextAlign.Center
+                style = MaterialTheme.typography.titleMedium
             )
             Row(
                 modifier = Modifier
@@ -179,8 +178,7 @@ fun RecipeGridBoxPlaceholder(
                     Text(
                         text = "Time",
                         color = MaterialTheme.colorScheme.onTertiary,
-                        style = MaterialTheme.typography.bodySmall,
-                        textAlign = TextAlign.Center
+                        style = MaterialTheme.typography.bodySmall
                     )
                 }
                 if (hasIngredients) {
@@ -216,8 +214,7 @@ fun RecipeRowBoxPlaceholder(
             Text(
                 text = "Recipe Name",
                 color = MaterialTheme.colorScheme.onTertiary,
-                style = MaterialTheme.typography.titleMedium,
-                textAlign = TextAlign.Center
+                style = MaterialTheme.typography.titleMedium
             )
             Column(
                 modifier = Modifier
@@ -236,8 +233,7 @@ fun RecipeRowBoxPlaceholder(
                     Text(
                         text = "Time",
                         color = MaterialTheme.colorScheme.onTertiary,
-                        style = MaterialTheme.typography.bodySmall,
-                        textAlign = TextAlign.Center
+                        style = MaterialTheme.typography.bodySmall
                     )
                     Icon(
                         painter = painterResource(R.drawable.timer_icon),

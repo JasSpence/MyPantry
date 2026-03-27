@@ -48,17 +48,11 @@ fun DeleteItemInstanceScreen(
         ) {
             Box(
                 modifier = Modifier
-                    .background(MaterialTheme.colorScheme.secondary)
-                    .fillMaxWidth()
-                    .height(Dimensions.BASE_FORM_HEIGHT.dp)
-            ) {
-                Text("Item Name")
-            }
-            Box(
-                modifier = Modifier
                     .fillMaxWidth()
             ) {
-                ListOfRows() { rowId ->
+                ListOfRows(
+                    title = "Instances to be deleted:"
+                ) { rowId ->
                     InstanceToDeleteRow(
                         rowId = rowId,
                         toDelete = true
@@ -66,10 +60,40 @@ fun DeleteItemInstanceScreen(
                 }
             }
             Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Row(
+                    modifier = Modifier
+                        .height(Dimensions.BASE_FORM_HEIGHT.dp)
+                        .clip(RoundedCornerShape(Dimensions.CORNER_ROUNDING.dp))
+                        .background(MaterialTheme.colorScheme.secondary)
+                        .padding(Dimensions.MEDIUM_BORDER.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(Dimensions.SAME_BOX_PADDING.dp)
+                ) {
+                    Text(
+                        text = "Submit",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onSecondary
+                    )
+                    Icon(
+                        painter = painterResource(R.drawable.right_arrow_icon),
+                        contentDescription = "submit",
+                        tint = MaterialTheme.colorScheme.onSecondary,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .aspectRatio(1f)
+                    )
+                }
+            }
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                ListOfRows() { rowId ->
+                ListOfRows(
+                    title = "Instances to keep:"
+                ) { rowId ->
                     InstanceToDeleteRow(
                         rowId = rowId,
                         toDelete = false

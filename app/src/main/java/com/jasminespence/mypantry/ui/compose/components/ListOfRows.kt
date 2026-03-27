@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.ui.theme.Dimensions
 
@@ -14,6 +15,7 @@ import com.jasminespence.mypantry.ui.theme.Dimensions
 fun ListOfRows(
     modifier: Modifier = Modifier,
     title: String? = null,
+    titleStyle: TextStyle = MaterialTheme.typography.titleMedium,
     rowContent: @Composable (Int) -> Unit,
 ) {
     Column(
@@ -23,7 +25,7 @@ fun ListOfRows(
         if (!title.isNullOrBlank()) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium
+                style = titleStyle
             )
         }
         Column(
