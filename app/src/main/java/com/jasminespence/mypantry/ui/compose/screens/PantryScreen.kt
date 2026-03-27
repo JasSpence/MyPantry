@@ -59,12 +59,12 @@ fun PantryScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(Dimensions.MAIN_PADDING.dp)
+            .padding(Dimensions.BIG_BORDER.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp)
+            verticalArrangement = Arrangement.spacedBy(Dimensions.DIFF_BOX_PADDING.dp)
         ) {
             PantryTopMenu(
                 isGridSelected = isGridSelected,
@@ -74,8 +74,8 @@ fun PantryScreen(
                 modifier = Modifier
                     .weight(1f),
                 columns = if (isGridSelected) GridCells.Fixed(2) else GridCells.Fixed(1),
-                verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
-                horizontalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
+                verticalArrangement = Arrangement.spacedBy(Dimensions.DIFF_BOX_PADDING.dp),
+                horizontalArrangement = Arrangement.spacedBy(Dimensions.DIFF_BOX_PADDING.dp),
             ) {
 //                items(pantryItemsWithInstances) {
 //                if (isGridSelected) {
@@ -130,7 +130,7 @@ fun PantryTopMenu(
         modifier = modifier
             .fillMaxWidth()
             .height(Dimensions.TOP_MENU_HEIGHT.dp),
-        horizontalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp, Alignment.End),
+        horizontalArrangement = Arrangement.spacedBy(Dimensions.GROUPED_BOX_PADDING.dp, Alignment.End),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
@@ -231,7 +231,7 @@ fun ItemSelectedOption(
             .fillMaxWidth()
             .background(color)
             .clickable(onClick = onClick)
-            .padding(Dimensions.MAIN_PADDING.dp)
+            .padding(Dimensions.BUTTON_PADDING.dp)
     ) {
         Text(
             text = text,

@@ -1,6 +1,7 @@
 package com.jasminespence.mypantry.ui.compose.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -37,7 +38,8 @@ fun PhotoWithRowComposableCard(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(Dimensions.SUB_PADDING.dp)
+            modifier = Modifier.padding(Dimensions.MEDIUM_BORDER.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimensions.GROUPED_BOX_PADDING.dp)
         ) {
             Box(
                 modifier = Modifier
@@ -46,7 +48,6 @@ fun PhotoWithRowComposableCard(
                         ratio = Dimensions.IMG_ASPECT_RATIO_SHORT.toFloat() / Dimensions.IMG_ASPECT_RATIO_LONG.toFloat(),
                         matchHeightConstraintsFirst = true
                     )
-                    .padding(Dimensions.SUB_PADDING.dp)
                     .background(MaterialTheme.colorScheme.secondary)
             ) {
                 Text("Image")

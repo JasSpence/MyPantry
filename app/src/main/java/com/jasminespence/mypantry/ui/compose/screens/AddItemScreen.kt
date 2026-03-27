@@ -43,13 +43,13 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
     Box (
         modifier = modifier
             .fillMaxSize()
-            .padding(Dimensions.MAIN_PADDING.dp)
+            .padding(Dimensions.BIG_BORDER.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimensions.DIFF_BOX_PADDING.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -124,7 +124,7 @@ fun CarouselSelector(
         modifier = modifier
             .fillMaxSize()
             .height(Dimensions.BASE_GRID_VIEW_HEIGHT.dp),
-        verticalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp),
+        verticalArrangement = Arrangement.spacedBy(Dimensions.GROUPED_BOX_PADDING.dp),
     ) {
         Text(
             text = name,
@@ -139,8 +139,8 @@ fun CarouselSelector(
             LazyRow(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(Dimensions.MAIN_PADDING.dp),
-                horizontalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp)
+                    .padding(Dimensions.MEDIUM_BORDER.dp),
+                horizontalArrangement = Arrangement.spacedBy(Dimensions.GROUPED_BOX_PADDING.dp)
             ) {
                 items(3) {
                     PhotoWithColComposableCard(

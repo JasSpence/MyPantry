@@ -1,12 +1,22 @@
 package com.jasminespence.mypantry.ui.theme
 
 object Dimensions {
-    const val MAIN_PADDING = 10
-    const val SUB_PADDING = 5
+    const val BIG_BORDER = 15
+    const val DIFF_BOX_PADDING = BIG_BORDER
+
+    const val MEDIUM_BORDER = 10
+    const val GROUPED_BOX_PADDING = MEDIUM_BORDER
+
+    const val SMALL_BORDER = 5
+    const val SAME_BOX_PADDING = SMALL_BORDER
+
+    const val BUTTON_PADDING = 10
+
     const val BASE_BIG_IMG_SIZE = 50
     // Current Aspect Ratio: 4x3
     const val IMG_ASPECT_RATIO_LONG = 4
     const val IMG_ASPECT_RATIO_SHORT = 3
+
     const val ACTION_BUTTON_DIMS = 60
     const val BASE_FORM_HEIGHT = 40
     const val TOP_MENU_HEIGHT = 30

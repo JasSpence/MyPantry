@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
+import com.jasminespence.mypantry.ui.compose.components.ListOfRows
 import com.jasminespence.mypantry.ui.theme.Dimensions
 
 @Composable
@@ -35,13 +36,13 @@ fun RecipeScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(Dimensions.MAIN_PADDING.dp)
+            .padding(Dimensions.BIG_BORDER.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimensions.DIFF_BOX_PADDING.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -66,50 +67,23 @@ fun RecipeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                List(
-                    name = "Ingredients",
-                    listRow = {
-                        IngredientRow(
-                            hasItem = listOf(true, false).random()
-                        )
-                    }
-                )
+                ListOfRows(
+                    title = "Ingredients"
+                ) {
+                    IngredientRow(
+                        hasItem = listOf(true, false).random()
+                    )
+                }
             }
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                List(
-                    name = "Method",
-                    listRow = {
-                        MethodRow()
-                    }
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun List(
-    name: String,
-    listRow: @Composable () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
-    ) {
-        Text(
-            text = name,
-            style = MaterialTheme.typography.titleMedium
-        )
-        Column(
-            modifier = modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp)
-        ) {
-            for (i in 1..3) {
-                listRow()
+                ListOfRows(
+                    title = "Method"
+                ) {
+                    MethodRow()
+                }
             }
         }
     }
@@ -124,7 +98,7 @@ fun IngredientRow(
         modifier = modifier
             .fillMaxWidth()
             .height(Dimensions.BASE_FORM_HEIGHT.dp),
-        horizontalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
+        horizontalArrangement = Arrangement.spacedBy(Dimensions.SAME_BOX_PADDING.dp)
     ) {
         Box(
             modifier = Modifier
@@ -138,7 +112,7 @@ fun IngredientRow(
             modifier = Modifier
                 .fillMaxHeight()
                 .background(MaterialTheme.colorScheme.secondary)
-                .padding(Dimensions.SUB_PADDING.dp)
+                .padding(Dimensions.SMALL_BORDER.dp)
         ) {
             Text("#")
         }
@@ -157,7 +131,7 @@ fun IngredientRow(
         ) {
             val iconModifier = Modifier
                 .fillMaxSize()
-                .padding(Dimensions.SUB_PADDING.dp)
+                .padding(0.dp,Dimensions.SAME_BOX_PADDING.dp)
             if (hasItem) {
                 Icon(
                     painter = painterResource(R.drawable.tick_icon),

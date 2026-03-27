@@ -1,6 +1,7 @@
 package com.jasminespence.mypantry.ui.compose.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,14 +35,14 @@ fun PhotoWithColComposableCard(
         enabled = onClick != null
     ) {
         Column(
+            modifier = Modifier.padding(Dimensions.MEDIUM_BORDER.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(Dimensions.SUB_PADDING.dp)
+            verticalArrangement = Arrangement.spacedBy(Dimensions.GROUPED_BOX_PADDING.dp)
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .padding(Dimensions.SUB_PADDING.dp)
                     .background(MaterialTheme.colorScheme.secondary)
             ) {
                 Text("Image")

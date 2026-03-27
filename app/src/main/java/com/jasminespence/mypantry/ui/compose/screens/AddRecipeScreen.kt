@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
 import com.jasminespence.mypantry.ui.compose.components.ActionButton
+import com.jasminespence.mypantry.ui.compose.components.ListOfRows
 import com.jasminespence.mypantry.ui.theme.Dimensions
 
 @Composable
@@ -37,13 +39,13 @@ fun AddRecipeScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(Dimensions.MAIN_PADDING.dp)
+            .padding(Dimensions.BIG_BORDER.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimensions.DIFF_BOX_PADDING.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -68,23 +70,21 @@ fun AddRecipeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                AddList(
-                    name = "Ingredients",
-                    listRow = {
-                        AddIngredientRow()
-                    }
-                )
+                ListOfRows(
+                    title = "Ingredients"
+                ) {
+                    AddIngredientRow()
+                }
             }
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                AddList(
-                    name = "Method",
-                    listRow = {
-                        AddMethodRow()
-                    }
-                )
+                ListOfRows(
+                    title = "Method"
+                ) {
+                    AddMethodRow()
+                }
             }
             // Adds empty space for save button
             Spacer(modifier = Modifier.height(Dimensions.ACTION_BUTTON_DIMS.dp))
@@ -105,31 +105,6 @@ fun AddRecipeScreen(
 }
 
 @Composable
-fun AddList(
-    name: String,
-    listRow: @Composable () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
-    ) {
-        Text(
-            text = name,
-            style = MaterialTheme.typography.titleMedium
-        )
-        Column(
-            modifier = modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp)
-        ) {
-            for (i in 1..3) {
-                listRow()
-            }
-        }
-    }
-}
-
-@Composable
 fun AddIngredientRow(
     modifier: Modifier = Modifier
 ) {
@@ -137,7 +112,7 @@ fun AddIngredientRow(
         modifier = modifier
             .fillMaxWidth()
             .height(Dimensions.BASE_FORM_HEIGHT.dp),
-        horizontalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
+        horizontalArrangement = Arrangement.spacedBy(Dimensions.SAME_BOX_PADDING.dp)
     ) {
         Box(
             modifier = Modifier
@@ -167,7 +142,7 @@ fun AddMethodRow(
             .fillMaxWidth()
             .heightIn(min = Dimensions.BASE_FORM_HEIGHT.dp)
             .height(IntrinsicSize.Min),
-        horizontalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
+        horizontalArrangement = Arrangement.spacedBy(Dimensions.SAME_BOX_PADDING.dp)
     ) {
         Box(
             modifier = Modifier
@@ -188,7 +163,8 @@ fun AddMethodRow(
                 tint = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(Dimensions.SUB_PADDING.dp)
+                    .padding(0.dp,Dimensions.SMALL_BORDER.dp)
+                    .aspectRatio(1f)
             )
         }
     }

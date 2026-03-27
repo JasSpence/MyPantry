@@ -43,12 +43,12 @@ fun AllRecipesScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(Dimensions.MAIN_PADDING.dp)
+            .padding(Dimensions.BIG_BORDER.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp)
+            verticalArrangement = Arrangement.spacedBy(Dimensions.DIFF_BOX_PADDING.dp)
         ) {
             RecipesTopMenu(
                 isGridSelected = isGridSelected,
@@ -58,8 +58,8 @@ fun AllRecipesScreen(
                 modifier = Modifier
                     .weight(1f),
                 columns = if (isGridSelected) GridCells.Fixed(2) else GridCells.Fixed(1),
-                verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
-                horizontalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
+                verticalArrangement = Arrangement.spacedBy(Dimensions.DIFF_BOX_PADDING.dp),
+                horizontalArrangement = Arrangement.spacedBy(Dimensions.DIFF_BOX_PADDING.dp),
             ) {
                 items(8) {
                     if (isGridSelected) {
@@ -105,7 +105,7 @@ fun RecipesTopMenu(
         modifier = modifier
             .fillMaxWidth()
             .height(Dimensions.TOP_MENU_HEIGHT.dp),
-        horizontalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp, Alignment.End),
+        horizontalArrangement = Arrangement.spacedBy(Dimensions.GROUPED_BOX_PADDING.dp, Alignment.End),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
@@ -169,7 +169,7 @@ fun RecipeGridBoxPlaceholder(
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Dimensions.SAME_BOX_PADDING.dp)
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.timer_icon),
@@ -229,7 +229,7 @@ fun RecipeRowBoxPlaceholder(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(
-                        Dimensions.SUB_PADDING.dp,
+                        Dimensions.SAME_BOX_PADDING.dp,
                         Alignment.End
                     )
                 ) {
@@ -267,7 +267,7 @@ fun RecipeRowBoxPlaceholder(
 @Composable
 fun AllRecipesScreenPreview() {
     AllRecipesScreen(
-        isGridSelected = false,
+        isGridSelected = true,
         changeView = {},
         onRecipeBoxClick = {},
         onAddBoxClicked = {}

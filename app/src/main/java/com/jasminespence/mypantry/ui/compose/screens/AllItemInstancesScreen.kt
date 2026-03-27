@@ -13,19 +13,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.jasminespence.mypantry.R
 import com.jasminespence.mypantry.ui.compose.components.DeleteRowBox
+import com.jasminespence.mypantry.ui.compose.components.ExpiryIcons
+import com.jasminespence.mypantry.ui.compose.components.ListOfRows
 import com.jasminespence.mypantry.ui.compose.components.SwipeableRow
 import com.jasminespence.mypantry.ui.theme.Dimensions
 
@@ -38,13 +37,13 @@ fun AllItemInstancesScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(Dimensions.MAIN_PADDING.dp)
+            .padding(Dimensions.BIG_BORDER.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimensions.DIFF_BOX_PADDING.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -69,41 +68,15 @@ fun AllItemInstancesScreen(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                InstanceList(
-                    name = "Instances",
-                    listRow = { rowId ->
-                        InstanceRow(
-                            rowId = rowId,
-                            swipedRow = swipedRow,
-                            setSwipedRow = setSwipedRow,
-                        )
-                    }
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun InstanceList(
-    name: String,
-    listRow: @Composable (Int) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
-    ) {
-        Text(
-            text = name,
-            style = MaterialTheme.typography.titleMedium
-        )
-        Column(
-            modifier = modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(Dimensions.MAIN_PADDING.dp)
-        ) {
-            for (i in 1..7) {
-                listRow(i)
+                ListOfRows(
+                    title = "Instances"
+                ) { rowId ->
+                    InstanceRow(
+                        rowId = rowId,
+                        swipedRow = swipedRow,
+                        setSwipedRow = setSwipedRow,
+                    )
+                }
             }
         }
     }
@@ -116,12 +89,12 @@ fun InstanceRow(
     swipedRow: Int?,
     setSwipedRow: (Int?) -> Unit
 ) {
-    val expiry = listOf(0,1,2).random()
+    val expiry = listOf(-1,0,1).random()
     Row (
         modifier = modifier
             .fillMaxWidth()
             .height(Dimensions.BASE_FORM_HEIGHT.dp),
-        horizontalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
+        horizontalArrangement = Arrangement.spacedBy(Dimensions.SAME_BOX_PADDING.dp)
     ) {
         SwipeableRow(
             modifier = Modifier
@@ -150,32 +123,11 @@ fun InstanceRow(
                 Text("Expiry Date")
             }
         }
-        val iconModifier = Modifier
-            .fillMaxHeight()
-            .padding(Dimensions.SUB_PADDING.dp)
-            .zIndex(0f)
-        if (expiry == 0) { // expired
-            Icon(
-                painter = painterResource(R.drawable.cross_icon),
-                contentDescription = "you have item",
-                tint = Color.Green,
-                modifier = iconModifier
-            )
-        } else if (expiry == 1) { // expires soon
-            Icon(
-                painter = painterResource(R.drawable.selected_error_icon),
-                contentDescription = "you do not have item",
-                tint = Color.Yellow,
-                modifier = iconModifier
-            )
-        } else { // doesn't expire soon
-            Icon(
-                painter = painterResource(R.drawable.tick_icon),
-                contentDescription = "you do not have item",
-                tint = Color.Red,
-                modifier = iconModifier
-            )
-        }
+        ExpiryIcons(
+            modifier = Modifier
+                .zIndex(0f),
+            expiry = expiry
+        )
     }
 }
 

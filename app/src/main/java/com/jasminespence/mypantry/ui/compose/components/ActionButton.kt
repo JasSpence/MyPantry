@@ -38,7 +38,7 @@ fun ActionButton(
             contentDescription = action,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(Dimensions.MAIN_PADDING.dp)
+                .padding(Dimensions.BUTTON_PADDING.dp)
         )
     }
 }

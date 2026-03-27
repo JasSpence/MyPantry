@@ -4,12 +4,15 @@ import androidx.compose.animation.core.animate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
@@ -105,14 +109,22 @@ fun DeleteRowBox(
     onClick: () -> Unit,
     color: Color
 ) {
-    Box(
+    Row(
         modifier = modifier
             .fillMaxHeight()
             .clickable(onClick = onClick)
             .background(color)
-            .padding(Dimensions.SUB_PADDING.dp),
-        contentAlignment = Alignment.Center
+            .padding(Dimensions.MEDIUM_BORDER.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimensions.SAME_BOX_PADDING.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
+        Icon(
+            painter = painterResource(R.drawable.delete_icon),
+            contentDescription = "delete instance",
+            tint = Color.White,
+            modifier = Modifier
+                .fillMaxHeight()
+        )
         Text(
             text = stringResource(R.string.delete_label),
             style = MaterialTheme.typography.titleMedium,
