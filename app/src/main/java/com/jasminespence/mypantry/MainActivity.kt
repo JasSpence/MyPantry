@@ -22,8 +22,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.jasminespence.mypantry.data.PantryRepo
 import com.jasminespence.mypantry.ui.compose.MainNavHost
-import com.jasminespence.mypantry.ui.compose.NavBar
-import com.jasminespence.mypantry.ui.compose.TopBar
+import com.jasminespence.mypantry.ui.compose.components.NavBar
+import com.jasminespence.mypantry.ui.compose.components.TopBar
 import com.jasminespence.mypantry.ui.theme.MyPantryTheme
 
 class MainActivity : ComponentActivity() {

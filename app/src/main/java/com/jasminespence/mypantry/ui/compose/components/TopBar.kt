@@ -1,4 +1,4 @@
-package com.jasminespence.mypantry.ui.compose
+package com.jasminespence.mypantry.ui.compose.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import com.jasminespence.mypantry.ui.compose.Screen
+import com.jasminespence.mypantry.ui.compose.allScreens
 
 // TODO: Standardise Dp measurements
 @Composable

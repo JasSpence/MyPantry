@@ -1,4 +1,4 @@
-package com.jasminespence.mypantry.ui.compose
+package com.jasminespence.mypantry.ui.compose.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

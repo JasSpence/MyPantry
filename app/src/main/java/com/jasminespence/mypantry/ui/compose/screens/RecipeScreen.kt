@@ -1,17 +1,15 @@
-package com.jasminespence.mypantry.ui.compose
+package com.jasminespence.mypantry.ui.compose.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -23,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,7 +29,7 @@ import com.jasminespence.mypantry.R
 import com.jasminespence.mypantry.ui.theme.Dimensions
 
 @Composable
-fun AddRecipeScreen(
+fun RecipeScreen(
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -67,10 +66,12 @@ fun AddRecipeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                AddList(
+                List(
                     name = "Ingredients",
                     listRow = {
-                        AddIngredientRow()
+                        IngredientRow(
+                            hasItem = listOf(true, false).random()
+                        )
                     }
                 )
             }
@@ -78,33 +79,19 @@ fun AddRecipeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                AddList(
+                List(
                     name = "Method",
                     listRow = {
-                        AddMethodRow()
+                        MethodRow()
                     }
                 )
             }
-            // Adds empty space for save button
-            Spacer(modifier = Modifier.height(Dimensions.ACTION_BUTTON_DIMS.dp))
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.End
-        ) {
-            ActionButton(
-                iconId = R.drawable.save_icon,
-                action = "save",
-                onBoxClick = {}
-            )
         }
     }
 }
 
 @Composable
-fun AddList(
+fun List(
     name: String,
     listRow: @Composable () -> Unit,
     modifier: Modifier = Modifier
@@ -129,7 +116,8 @@ fun AddList(
 }
 
 @Composable
-fun AddIngredientRow(
+fun IngredientRow(
+    hasItem: Boolean,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -141,8 +129,16 @@ fun AddIngredientRow(
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .height(Dimensions.BASE_FORM_HEIGHT.dp)
+                .width(Dimensions.BASE_FORM_HEIGHT.dp)
                 .background(MaterialTheme.colorScheme.secondary)
+        ) {
+            Text("Img")
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .background(MaterialTheme.colorScheme.secondary)
+                .padding(Dimensions.SUB_PADDING.dp)
         ) {
             Text("#")
         }
@@ -154,47 +150,49 @@ fun AddIngredientRow(
         ) {
             Text("Ingredient Name")
         }
-    }
-}
-
-@Composable
-fun AddMethodRow(
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = Dimensions.BASE_FORM_HEIGHT.dp)
-            .height(IntrinsicSize.Min),
-        horizontalArrangement = Arrangement.spacedBy(Dimensions.SUB_PADDING.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f)
-                .background(MaterialTheme.colorScheme.secondary)
-        ) {
-            Text("Step description")
-        }
         Box(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(Dimensions.BASE_FORM_HEIGHT.dp)
         ) {
-            Icon(
-                painter = painterResource(R.drawable.reorder_icon),
-                contentDescription = "re-order",
-                tint = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(Dimensions.SUB_PADDING.dp)
-            )
+            val iconModifier = Modifier
+                .fillMaxSize()
+                .padding(Dimensions.SUB_PADDING.dp)
+            if (hasItem) {
+                Icon(
+                    painter = painterResource(R.drawable.tick_icon),
+                    contentDescription = "you have item",
+                    tint = Color.Green,
+                    modifier = iconModifier
+                )
+            } else {
+                Icon(
+                    painter = painterResource(R.drawable.cross_icon),
+                    contentDescription = "you do not have item",
+                    tint = Color.Red,
+                    modifier = iconModifier
+                )
+            }
         }
+    }
+}
+
+@Composable
+fun MethodRow(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .defaultMinSize(minHeight = Dimensions.BASE_FORM_HEIGHT.dp)
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.secondary)
+    ) {
+        Text("Step description")
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun AddRecipeScreenPreview() {
-    AddRecipeScreen()
+fun RecipeScreenPreview() {
+    RecipeScreen()
 }

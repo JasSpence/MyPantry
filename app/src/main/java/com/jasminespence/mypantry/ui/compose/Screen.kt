@@ -18,6 +18,9 @@ sealed class Screen(
     data object AddItem: Screen("add_item", R.string.add_item_label)
     data object AddRecipe: Screen("add_recipe", R.string.add_recipe_label)
     data object Recipe: Screen("recipe", R.string.recipe_label)
+    data object AddItemInstance: Screen("add_item_instance", R.string.add_item_instance_label)
+    data object AllItemInstances: Screen("all_item_instances", R.string.all_item_instances)
+    data object DeleteItemInstance: Screen("delete_item_instance", R.string.delete_item_instance)
 }
 
 val navBarScreens = listOf(Screen.Home, Screen.Pantry, Screen.AllRecipes, Screen.ShoppingList)
@@ -29,5 +32,8 @@ val allScreens = listOf(
     Screen.Profile,
     Screen.AddItem,
     Screen.AddRecipe,
-    Screen.Recipe
+    Screen.Recipe,
+    Screen.AddItemInstance,
+    Screen.AllItemInstances,
+    Screen.DeleteItemInstance
 )

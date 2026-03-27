@@ -1,4 +1,4 @@
-package com.jasminespence.mypantry.ui.compose
+package com.jasminespence.mypantry.ui.compose.components
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
+import com.jasminespence.mypantry.ui.compose.navBarScreens
 
 
 @Composable

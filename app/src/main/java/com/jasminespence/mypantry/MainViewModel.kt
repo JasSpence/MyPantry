@@ -30,6 +30,14 @@ class MainViewModel(
             initialValue = emptyMap()
         )
 
+    // NOTE: swipedRow is generic, it should be reset for each screen
+    private val _allItemInstancesScreenSwipedRow = MutableStateFlow<Int?>(null)
+    val allItemInstancesScreenSwipedRow: StateFlow<Int?> = _allItemInstancesScreenSwipedRow
+
+    fun setAllItemInstancesScreenSwipedRow (rowId: Int?) {
+        _allItemInstancesScreenSwipedRow.value = rowId
+    }
+
     private val _isPantryGridViewSelected = MutableStateFlow(true)
     val isPantryGridViewSelected: StateFlow<Boolean> = _isPantryGridViewSelected
 

@@ -1,4 +1,4 @@
-package com.jasminespence.mypantry.ui.compose
+package com.jasminespence.mypantry.ui.compose.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,6 +27,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
+import com.jasminespence.mypantry.ui.compose.components.ActionButton
+import com.jasminespence.mypantry.ui.compose.components.PhotoWithColComposableCard
+import com.jasminespence.mypantry.ui.compose.components.PhotoWithRowComposableCard
 import com.jasminespence.mypantry.ui.theme.Dimensions
 
 @Composable

@@ -1,7 +1,8 @@
-package com.jasminespence.mypantry.ui.compose
+package com.jasminespence.mypantry.ui.compose.screens
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,6 +38,7 @@ import com.jasminespence.mypantry.data.entites.StorageLocation
 import com.jasminespence.mypantry.data.entites.relationships.PantryItemWithInstances
 import kotlin.time.Instant
 import com.jasminespence.mypantry.R
+import com.jasminespence.mypantry.ui.compose.components.ActionButton
 import com.jasminespence.mypantry.ui.theme.Dimensions
 
 @Composable
@@ -48,6 +50,9 @@ fun PantryScreen(
     selectedPantryItem: Int?,
     onPantryItemClick: (Int?) -> Unit,
     onAddItemClick: () -> Unit,
+    onAddNewInstancesClick: (Int) -> Unit,
+    onViewInstancesClick: (Int) -> Unit,
+    onDeleteInstanceClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val placeholders = listOf(1, 2, 3, 4, 5, 6, 7, 8)
@@ -88,7 +93,10 @@ fun PantryScreen(
                         itemId = placeholder,
                         isItemSelected = selectedPantryItem == placeholder,
                         isGridSelected = isGridSelected,
-                        onBoxClick = onPantryItemClick
+                        onBoxClick = onPantryItemClick,
+                        onAddNewInstancesClick = onAddNewInstancesClick,
+                        onViewInstancesClick = onViewInstancesClick,
+                        onDeleteInstanceClick = onDeleteInstanceClick
                     )
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) {
@@ -166,6 +174,9 @@ fun PantryItemBox(
     itemId: Int,
     isItemSelected: Boolean,
     onBoxClick: (Int?) -> Unit,
+    onAddNewInstancesClick: (Int) -> Unit,
+    onViewInstancesClick: (Int) -> Unit,
+    onDeleteInstanceClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     ElevatedCard(
@@ -181,7 +192,7 @@ fun PantryItemBox(
             }
         }
     ) {
-        Column() {
+        Column {
             if (isGridSelected) {
                 PantryItemGridPlaceholder()
             } else {
@@ -190,15 +201,18 @@ fun PantryItemBox(
             if (isItemSelected) {
                 ItemSelectedOption(
                     text = "Add new Instance",
-                    color = Color.Green
+                    color = Color.Green,
+                    onClick = { onAddNewInstancesClick(itemId) }
                 )
                 ItemSelectedOption(
                     text = "View Instances",
-                    color = Color.Gray
+                    color = Color.Gray,
+                    onClick = { onViewInstancesClick(itemId) }
                 )
                 ItemSelectedOption(
                     text = "Delete Instance",
-                    color = Color.Red
+                    color = Color.Red,
+                    onClick = { onDeleteInstanceClick(itemId) }
                 )
             }
         }
@@ -209,13 +223,15 @@ fun PantryItemBox(
 fun ItemSelectedOption(
     text: String,
     color: Color,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .background(color)
-            .padding(Dimensions.SUB_PADDING.dp)
+            .clickable(onClick = onClick)
+            .padding(Dimensions.MAIN_PADDING.dp)
     ) {
         Text(
             text = text,
@@ -378,5 +394,8 @@ fun PantryScreenPreview() {
         selectedPantryItem = null,
         onPantryItemClick = {},
         onAddItemClick = {},
+        onAddNewInstancesClick = {},
+        onViewInstancesClick = {},
+        onDeleteInstanceClick = {}
     )
 }
