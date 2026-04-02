@@ -17,19 +17,16 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
 import com.jasminespence.mypantry.ui.compose.components.ActionButton
-import com.jasminespence.mypantry.ui.compose.components.PhotoWithColComposableCard
-import com.jasminespence.mypantry.ui.compose.components.PhotoWithRowComposableCard
+import com.jasminespence.mypantry.ui.compose.components.DataItemGrid
+import com.jasminespence.mypantry.ui.compose.components.DataItemRow
 import com.jasminespence.mypantry.ui.theme.Dimensions
 
 @Composable
@@ -149,53 +146,14 @@ fun RecipeGridBoxPlaceholder(
     onRecipeBoxClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    PhotoWithColComposableCard(
-        photo = "-",
+    DataItemGrid(
+        modifier = modifier,
+        title = "Recipe Name",
+        hasTick = hasIngredients,
         onClick = onRecipeBoxClick,
-        modifier = modifier
-            .height(Dimensions.BASE_GRID_VIEW_HEIGHT.dp),
-        composable = {
-            Text(
-                text = "Recipe Name",
-                color = MaterialTheme.colorScheme.onTertiary,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(Dimensions.SAME_BOX_PADDING.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.timer_icon),
-                        contentDescription = "recipe time",
-                        tint = MaterialTheme.colorScheme.onTertiary
-                    )
-                    Text(
-                        text = "Time",
-                        color = MaterialTheme.colorScheme.onTertiary,
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-                if (hasIngredients) {
-                    Icon(
-                        painter = painterResource(R.drawable.tick_icon),
-                        contentDescription = "you have all ingredients",
-                        tint = Color.Green
-                    )
-                } else {
-                    Icon(
-                        painter = painterResource(R.drawable.cross_icon),
-                        contentDescription = "you do not have all ingredients",
-                        tint = Color.Red
-                    )
-                }
-            }
-        }
+        bottomLeftText = "Time",
+        bottomLeftIcon = R.drawable.timer_icon,
+        bottomLeftIconDescription = "recipe duration"
     )
 }
 
@@ -205,57 +163,14 @@ fun RecipeRowBoxPlaceholder(
     onRecipeBoxClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    PhotoWithRowComposableCard(
-        photo = "-",
+    DataItemRow(
+        modifier = modifier,
+        title = "Recipe Name",
+        hasTick = hasIngredients,
         onClick = onRecipeBoxClick,
-        modifier = modifier
-            .height(Dimensions.BASE_ROW_VIEW_HEIGHT.dp),
-        composable = {
-            Text(
-                text = "Recipe Name",
-                color = MaterialTheme.colorScheme.onTertiary,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxHeight(),
-                horizontalAlignment = Alignment.End,
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(
-                        Dimensions.SAME_BOX_PADDING.dp,
-                        Alignment.End
-                    )
-                ) {
-                    Text(
-                        text = "Time",
-                        color = MaterialTheme.colorScheme.onTertiary,
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    Icon(
-                        painter = painterResource(R.drawable.timer_icon),
-                        contentDescription = "recipe time",
-                        tint = MaterialTheme.colorScheme.onTertiary
-                    )
-                }
-                if (hasIngredients) {
-                    Icon(
-                        painter = painterResource(R.drawable.tick_icon),
-                        contentDescription = "you have all ingredients",
-                        tint = Color.Green
-                    )
-                } else {
-                    Icon(
-                        painter = painterResource(R.drawable.cross_icon),
-                        contentDescription = "you do not have all ingredients",
-                        tint = Color.Red
-                    )
-                }
-            }
-        }
+        bottomLeftText = "Time",
+        bottomLeftIcon = R.drawable.timer_icon,
+        bottomLeftIconDescription = "recipe duration"
     )
 }
 

@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -38,16 +39,23 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyPantryApp() {
-    MyPantryTheme(dynamicColor = false) {
+    val context = LocalContext.current
+    val viewModel: MainViewModel = viewModel(
+        factory = MainViewModelFactory(
+            PantryRepo(context = context)
+        )
+    )
+    val isDarkMode by viewModel.isDarkMode.collectAsStateWithLifecycle()
+    val contrast by viewModel.contrast.collectAsStateWithLifecycle()
+
+    MyPantryTheme(
+        nullableDarkTheme = isDarkMode,
+        dynamicColor = false,
+        nullableContrastLevel = contrast
+    ) {
         val navController = rememberNavController()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
-        val context = LocalContext.current
-        val viewModel: MainViewModel = viewModel(
-            factory = MainViewModelFactory(
-                PantryRepo(context = context)
-            )
-        )
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
@@ -75,6 +83,7 @@ fun MyPantryApp() {
             MainNavHost(
                 navController = navController,
                 viewModel = viewModel,
+                currentContrast = contrast,
                 modifier = Modifier.padding(innerPadding)
             )
         }

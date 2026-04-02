@@ -39,7 +39,13 @@ import com.jasminespence.mypantry.data.entites.relationships.PantryItemWithInsta
 import kotlin.time.Instant
 import com.jasminespence.mypantry.R
 import com.jasminespence.mypantry.ui.compose.components.ActionButton
+import com.jasminespence.mypantry.ui.compose.components.DataItemGrid
+import com.jasminespence.mypantry.ui.compose.components.DataItemRow
+import com.jasminespence.mypantry.ui.theme.ColorPalette
 import com.jasminespence.mypantry.ui.theme.Dimensions
+import com.jasminespence.mypantry.ui.theme.green
+import com.jasminespence.mypantry.ui.theme.grey
+import com.jasminespence.mypantry.ui.theme.red
 
 @Composable
 fun PantryScreen(
@@ -183,35 +189,44 @@ fun PantryItemBox(
         modifier = modifier,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.tertiary
-        ),
-        onClick = {
-            if (isItemSelected) {
-                onBoxClick(null)
-            } else {
-                onBoxClick(itemId)
-            }
-        }
+        )
     ) {
         Column {
             if (isGridSelected) {
-                PantryItemGridPlaceholder()
+                PantryItemGridPlaceholder(
+                    onClick = {
+                        if (isItemSelected) {
+                            onBoxClick(null)
+                        } else {
+                            onBoxClick(itemId)
+                        }
+                    }
+                )
             } else {
-                PantryItemRowPlaceholder()
+                PantryItemRowPlaceholder(
+                    onClick = {
+                        if (isItemSelected) {
+                            onBoxClick(null)
+                        } else {
+                            onBoxClick(itemId)
+                        }
+                    }
+                )
             }
             if (isItemSelected) {
                 ItemSelectedOption(
                     text = "Add new Instance",
-                    color = Color.Green,
+                    colorPalette = MaterialTheme.colorScheme.green,
                     onClick = { onAddNewInstancesClick(itemId) }
                 )
                 ItemSelectedOption(
                     text = "View Instances",
-                    color = Color.Gray,
+                    colorPalette = MaterialTheme.colorScheme.grey,
                     onClick = { onViewInstancesClick(itemId) }
                 )
                 ItemSelectedOption(
                     text = "Delete Instance",
-                    color = Color.Red,
+                    colorPalette = MaterialTheme.colorScheme.red,
                     onClick = { onDeleteInstanceClick(itemId) }
                 )
             }
@@ -222,48 +237,59 @@ fun PantryItemBox(
 @Composable
 fun ItemSelectedOption(
     text: String,
-    color: Color,
+    colorPalette: ColorPalette,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(color)
+            .background(colorPalette.container)
             .clickable(onClick = onClick)
             .padding(Dimensions.BUTTON_PADDING.dp)
     ) {
         Text(
             text = text,
+            color = colorPalette.onContainer,
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         )
     }
 }
 
 @Composable
 fun PantryItemGridPlaceholder(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null
 ) {
-    Box(
-        modifier = modifier
-            .height(Dimensions.BASE_GRID_VIEW_HEIGHT.dp)
-    ) {
-        Text("Pantry Item Placeholder")
-    }
+    val hasEnoughInstances = listOf(true,false).random()
+    DataItemGrid(
+        modifier = modifier,
+        title = "Pantry Item Name",
+        hasTick = hasEnoughInstances,
+        onClick = onClick,
+        bottomLeftText = "Next Expiry",
+        bottomLeftIcon = R.drawable.calendar_icon,
+        bottomLeftIconDescription = "next expiry date"
+    )
 }
 
 @Composable
 fun PantryItemRowPlaceholder(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null
 ) {
-    Box(
-        modifier = modifier
-            .height(Dimensions.BASE_ROW_VIEW_HEIGHT.dp)
-    ) {
-        Text("Pantry Item Placeholder")
-    }
+    val hasEnoughInstances = listOf(true,false).random()
+    DataItemRow(
+        modifier = modifier,
+        title = "Pantry Item Name",
+        hasTick = hasEnoughInstances,
+        onClick = onClick,
+        bottomLeftText = "Next Expiry",
+        bottomLeftIcon = R.drawable.calendar_icon,
+        bottomLeftIconDescription = "next expiry date"
+    )
 }
 
 //@Composable

@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -46,6 +48,13 @@ fun DeleteItemInstanceScreen(
             verticalArrangement = Arrangement.spacedBy(Dimensions.DIFF_BOX_PADDING.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            ElevatedCard(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.tertiary
+                )
+            ) {
+                PantryItemRowPlaceholder()
+            }
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -150,6 +159,9 @@ fun InstanceToDeleteRow(
         horizontalArrangement = Arrangement.spacedBy(Dimensions.GROUPED_BOX_PADDING.dp)
     ) {
         ExpiryIcons(
+            modifier = Modifier
+                .fillMaxHeight()
+                .aspectRatio(1f),
             expiry = expiry
         )
         Row(

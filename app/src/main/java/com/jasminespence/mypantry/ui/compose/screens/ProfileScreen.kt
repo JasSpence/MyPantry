@@ -18,10 +18,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jasminespence.mypantry.ui.compose.components.RowSelector
+import com.jasminespence.mypantry.ui.theme.Contrast
 import com.jasminespence.mypantry.ui.theme.Dimensions
+import com.jasminespence.mypantry.ui.theme.contrastChoices
+import com.jasminespence.mypantry.ui.theme.grey
 
 @Composable
-fun ProfileScreen(modifier: Modifier = Modifier) {
+fun ProfileScreen(
+    modifier: Modifier = Modifier,
+    currentContrast: Contrast?,
+    setContrast: (Contrast) -> Unit
+) {
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -60,6 +68,20 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
             ) {
                 Text("Expires soon time")
             }
+            Box(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.secondary)
+                    .fillMaxWidth()
+                    .height(Dimensions.BASE_FORM_HEIGHT.dp)
+            ) {
+                Text("Contrast/Theme Settings")
+            }
+            RowSelector(
+                setOption = setContrast,
+                choices = contrastChoices,
+                currentOption = currentContrast,
+                colorPalette = MaterialTheme.colorScheme.grey
+            )
         }
     }
 }
@@ -67,5 +89,8 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen()
+    ProfileScreen(
+        setContrast = {},
+        currentContrast = Contrast.STANDARD
+    )
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.jasminespence.mypantry.data.PantryRepo
 import com.jasminespence.mypantry.data.entites.relationships.PantryItemWithInstances
+import com.jasminespence.mypantry.ui.theme.Contrast
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,20 @@ import kotlinx.coroutines.flow.stateIn
 class MainViewModel(
     pantryRepo: PantryRepo
 ) : ViewModel() {
+
+    private val _isDarkMode = MutableStateFlow<Boolean?>(null)
+    val isDarkMode: StateFlow<Boolean?> = _isDarkMode
+
+    fun setIsDarkMode (isDarkMode: Boolean?) {
+        _isDarkMode.value = isDarkMode
+    }
+
+    private val _contrast = MutableStateFlow<Contrast?>(null)
+    val contrast: StateFlow<Contrast?> = _contrast
+
+    fun setContrast (contrast: Contrast?) {
+        _contrast.value = contrast
+    }
 
     val pantryItemsWithInstances: StateFlow<List<PantryItemWithInstances>> = pantryRepo.pantryItemsWithInstances
         .stateIn(
@@ -30,7 +45,6 @@ class MainViewModel(
             initialValue = emptyMap()
         )
 
-    // NOTE: swipedRow is generic, it should be reset for each screen
     private val _allItemInstancesScreenSwipedRow = MutableStateFlow<Int?>(null)
     val allItemInstancesScreenSwipedRow: StateFlow<Int?> = _allItemInstancesScreenSwipedRow
 

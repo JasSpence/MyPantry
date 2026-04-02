@@ -5,36 +5,25 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
 import com.jasminespence.mypantry.ui.compose.components.ActionButton
-import com.jasminespence.mypantry.ui.compose.components.PhotoWithColComposableCard
+import com.jasminespence.mypantry.ui.compose.components.CarouselSelector
 import com.jasminespence.mypantry.ui.theme.Dimensions
 import kotlin.collections.emptyList
-
-data class CarouselOption(
-    val name: String,
-    val image: String
-)
 
 @Composable
 fun AddItemScreen(modifier: Modifier = Modifier) {
@@ -83,8 +72,7 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
             ) {
                 CarouselSelector(
-                    name = "Storage Location",
-                    options = emptyList()
+                    name = "Storage Location"
                 )
             }
             Box(
@@ -92,8 +80,7 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
             ) {
                 CarouselSelector(
-                    name = "Category",
-                    options = emptyList()
+                    name = "Category"
                 )
             }
             // Adds empty space for save button
@@ -110,69 +97,6 @@ fun AddItemScreen(modifier: Modifier = Modifier) {
                 action = "save",
                 onBoxClick = {}
             )
-        }
-    }
-}
-
-@Composable
-fun CarouselSelector(
-    name: String,
-    options: List<CarouselOption>,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .height(Dimensions.BASE_GRID_VIEW_HEIGHT.dp),
-        verticalArrangement = Arrangement.spacedBy(Dimensions.GROUPED_BOX_PADDING.dp),
-    ) {
-        Text(
-            text = name,
-            style = MaterialTheme.typography.titleMedium
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(RoundedCornerShape(Dimensions.CORNER_ROUNDING.dp))
-                .background(MaterialTheme.colorScheme.tertiaryContainer),
-        ) {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(Dimensions.MEDIUM_BORDER.dp),
-                horizontalArrangement = Arrangement.spacedBy(Dimensions.GROUPED_BOX_PADDING.dp)
-            ) {
-                items(3) {
-                    PhotoWithColComposableCard(
-                        photo = "-",
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(Dimensions.BASE_GRID_VIEW_WIDTH.dp),
-                        composable = {
-                            Text(
-                                text = "Option Name",
-                                color = MaterialTheme.colorScheme.onTertiary,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                        }
-                    )
-                }
-                item {
-                    PhotoWithColComposableCard(
-                        photo = "-",
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(Dimensions.BASE_GRID_VIEW_WIDTH.dp),
-                        composable = {
-                            Text(
-                                text = "Add new ${name.lowercase()}",
-                                color = MaterialTheme.colorScheme.onTertiary,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                        }
-                    )
-                }
-            }
         }
     }
 }

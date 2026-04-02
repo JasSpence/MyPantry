@@ -19,11 +19,13 @@ import com.jasminespence.mypantry.ui.compose.screens.PantryScreen
 import com.jasminespence.mypantry.ui.compose.screens.ProfileScreen
 import com.jasminespence.mypantry.ui.compose.screens.RecipeScreen
 import com.jasminespence.mypantry.ui.compose.screens.ShoppingListScreen
+import com.jasminespence.mypantry.ui.theme.Contrast
 
 @Composable
 fun MainNavHost(
     navController: NavHostController,
     viewModel: MainViewModel,
+    currentContrast: Contrast?,
     modifier: Modifier = Modifier
 ) {
     val pantryItemsWithInstances by viewModel.pantryItemsWithInstances.collectAsStateWithLifecycle()
@@ -67,7 +69,10 @@ fun MainNavHost(
             ShoppingListScreen()
         }
         composable(route=Screen.Profile.route) {
-            ProfileScreen()
+            ProfileScreen(
+                currentContrast = currentContrast,
+                setContrast = { viewModel.setContrast(it) }
+            )
         }
         composable(route=Screen.AddItem.route) {
             AddItemScreen()

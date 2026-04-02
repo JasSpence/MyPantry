@@ -241,43 +241,58 @@ private val highContrastDarkColorScheme = darkColorScheme(
 
 @Composable
 fun MyPantryTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
+    nullableDarkTheme: Boolean? = isSystemInDarkTheme(),
+    // Dynamic colour is available on Android 12+
     dynamicColor: Boolean = true,
+    nullableContrastLevel: Contrast? = resolveColorScheme(dynamicColor = dynamicColor),
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-          if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+    val darkTheme = nullableDarkTheme ?: isSystemInDarkTheme()
+    val contrastLevel = nullableContrastLevel ?: resolveColorScheme(dynamicColor = dynamicColor)
+
+    val colorScheme = when (contrastLevel) {
+        Contrast.DYNAMIC -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            } else {
+                if (darkTheme) darkScheme else lightScheme
+            }
         }
 
+        Contrast.HIGH -> if (darkTheme) highContrastDarkColorScheme else highContrastLightColorScheme
+        Contrast.MEDIUM -> if (darkTheme) mediumContrastDarkColorScheme else mediumContrastLightColorScheme
+        Contrast.STANDARD -> if (darkTheme) darkScheme else lightScheme
+    }
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = AppTypography,
+        content = content
+    )
+}
+
+@Composable
+fun resolveColorScheme(
+    dynamicColor: Boolean
+): Contrast {
+    val context = LocalContext.current
+    return when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> Contrast.DYNAMIC
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> {
-            val uiModeManager = context.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
+            val uiModeManager =
+                context.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
             val contrastLevel = uiModeManager.contrast
 
             when (contrastLevel) {
-                in 0.0f..0.33f -> if (darkTheme)
-                  darkScheme else lightScheme
-
-                in 0.34f..0.66f -> if (darkTheme)
-                  mediumContrastDarkColorScheme else mediumContrastLightColorScheme
-
-                in 0.67f..1.0f -> if (darkTheme)
-                  highContrastDarkColorScheme else highContrastLightColorScheme
-
-                else -> if (darkTheme) darkScheme else lightScheme
-          }
-      }
-      
-      darkTheme -> darkScheme
-      else -> lightScheme
-  }
-
-  MaterialTheme(
-    colorScheme = colorScheme,
-    typography = AppTypography,
-    content = content
-  )
+                in 0.0f..0.33f -> Contrast.STANDARD
+                in 0.34f..0.66f -> Contrast.MEDIUM
+                in 0.67f..1.0f -> Contrast.HIGH
+                else -> Contrast.STANDARD
+            }
+        }
+        else -> Contrast.STANDARD
+    }
 }
+
 
