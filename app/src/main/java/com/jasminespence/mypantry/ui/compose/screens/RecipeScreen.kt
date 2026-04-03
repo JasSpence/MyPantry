@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jasminespence.mypantry.MyPantryThemePreview
 import com.jasminespence.mypantry.R
 import com.jasminespence.mypantry.ui.compose.components.ListOfRows
 import com.jasminespence.mypantry.ui.theme.Dimensions
@@ -168,5 +169,7 @@ fun MethodRow(
 @Preview(showBackground = true)
 @Composable
 fun RecipeScreenPreview() {
-    RecipeScreen()
+    MyPantryThemePreview() {
+        RecipeScreen()
+    }
 }

@@ -33,23 +33,28 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.unit.dp
+import com.jasminespence.mypantry.MyPantryThemePreview
 import com.jasminespence.mypantry.ui.theme.ColorPalette
 import com.jasminespence.mypantry.ui.theme.Contrast
 import com.jasminespence.mypantry.ui.theme.Dimensions
+import com.jasminespence.mypantry.ui.theme.colorPalettes
 import com.jasminespence.mypantry.ui.theme.contrastChoices
-import com.jasminespence.mypantry.ui.theme.grey
+import com.jasminespence.mypantry.ui.theme.deactivatedPalette
 import kotlinx.coroutines.launch
 import kotlin.Enum
 
 
 @Composable
-fun <E : Enum<E>> RowSelector(
+fun <E : Enum<E>> SliderSelector(
     modifier: Modifier = Modifier,
     choices: List<E>,
     setOption: (E) -> Unit,
-    currentOption: E?,
-    colorPalette: ColorPalette
+    activatedOption: E?,
+    deactivatedOption: E?,
+    activatedColorPalette: ColorPalette,
+    activated: Boolean
 ) {
+    val currentOption = if (activated) activatedOption else deactivatedOption
     val currentOptionState = rememberUpdatedState(currentOption)
     var selectorOffset by remember { mutableFloatStateOf(0f) }
     var optionBoxWidth by remember { mutableFloatStateOf(0f) }
@@ -82,31 +87,37 @@ fun <E : Enum<E>> RowSelector(
             }
         }
     }
-
+    val colorPalette = if (activated) activatedColorPalette else MaterialTheme.colorScheme.deactivatedPalette
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(Dimensions.ACTION_BUTTON_DIMS.dp)
             .clip(RoundedCornerShape(Dimensions.CORNER_ROUNDING.dp))
             .background(colorPalette.surface)
-            .pointerInput(Unit) {
-                var totalDrag = 0f
-                detectHorizontalDragGestures(
-                    onDragEnd = {
-                        val currentOption = currentOptionState.value
-                        val canMoveRight = currentOption != null && currentOption.ordinal < choices.size - 1
-                        val canMoveLeft = currentOption != null && currentOption.ordinal > 0
-                        if (totalDrag > 0) {
-                            if (canMoveRight) changeOption(choices[currentOption.ordinal + 1])
-                        } else if (totalDrag < 0) {
-                            if (canMoveLeft) changeOption(choices[currentOption.ordinal - 1])
+            .then(if (activated) {
+                    Modifier
+                        .pointerInput(Unit) {
+                        var totalDrag = 0f
+                        detectHorizontalDragGestures(
+                            onDragEnd = {
+                                val currentOption = currentOptionState.value
+                                val canMoveRight = currentOption != null && currentOption.ordinal < choices.size - 1
+                                val canMoveLeft = currentOption != null && currentOption.ordinal > 0
+                                if (totalDrag > 0) {
+                                    if (canMoveRight) changeOption(choices[currentOption.ordinal + 1])
+                                } else if (totalDrag < 0) {
+                                    if (canMoveLeft) changeOption(choices[currentOption.ordinal - 1])
+                                }
+                                totalDrag = 0f
+                            }
+                        ) { _, dragAmount ->
+                            totalDrag += dragAmount
                         }
-                        totalDrag = 0f
                     }
-                ) { _, dragAmount ->
-                    totalDrag += dragAmount
+                } else {
+                    Modifier
                 }
-            }
+            )
     ) {
         val density = LocalDensity.current
         RowSelectorSelectionBox(
@@ -125,9 +136,15 @@ fun <E : Enum<E>> RowSelector(
                     modifier = Modifier
                         .fillMaxHeight()
                         .weight(1f)
-                        .clickable(
-                            onClick = {
-                                changeOption(contrast)
+                        .then(
+                            if (activated) {
+                                Modifier.clickable(
+                                    onClick = {
+                                        changeOption(contrast)
+                                    }
+                                )
+                            } else {
+                                Modifier
                             }
                         )
                         .onGloballyPositioned { coordinates ->
@@ -163,11 +180,15 @@ fun RowSelectorSelectionBox(
 
 @Preview(showBackground = true)
 @Composable
-fun RowSelectorPreview() {
-    RowSelector(
-        setOption = {},
-        choices = contrastChoices,
-        currentOption = Contrast.HIGH,
-        colorPalette = MaterialTheme.colorScheme.grey
-    )
+fun SliderSelectorPreview() {
+    MyPantryThemePreview() {
+        SliderSelector(
+            setOption = {},
+            choices = contrastChoices,
+            activatedOption = Contrast.HIGH,
+            deactivatedOption = Contrast.STANDARD,
+            activatedColorPalette = MaterialTheme.colorScheme.colorPalettes.blue,
+            activated = true
+        )
+    }
 }

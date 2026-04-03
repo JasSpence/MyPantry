@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jasminespence.mypantry.MyPantryThemePreview
 import com.jasminespence.mypantry.R
 import com.jasminespence.mypantry.ui.compose.components.ActionButton
 import com.jasminespence.mypantry.ui.compose.components.DataItemGrid
@@ -177,10 +178,12 @@ fun RecipeRowBoxPlaceholder(
 @Preview(showBackground = true)
 @Composable
 fun AllRecipesScreenPreview() {
-    AllRecipesScreen(
-        isGridSelected = true,
-        changeView = {},
-        onRecipeBoxClick = {},
-        onAddBoxClicked = {}
-    )
+    MyPantryThemePreview() {
+        AllRecipesScreen(
+            isGridSelected = true,
+            changeView = {},
+            onRecipeBoxClick = {},
+            onAddBoxClicked = {}
+        )
+    }
 }

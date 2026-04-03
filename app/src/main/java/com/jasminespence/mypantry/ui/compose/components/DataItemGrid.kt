@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jasminespence.mypantry.MyPantryThemePreview
 import com.jasminespence.mypantry.R
 import com.jasminespence.mypantry.ui.theme.Dimensions
 
@@ -86,11 +87,13 @@ fun DataItemGrid(
 @Preview(showBackground = true)
 @Composable
 fun DataItemGridPreview() {
-    DataItemGrid(
-        title = "Item Name",
-        hasTick = false,
-        bottomLeftIcon = R.drawable.selected_error_icon,
-        bottomLeftIconDescription = "error",
-        bottomLeftText = "Text"
-    )
+    MyPantryThemePreview() {
+        DataItemGrid(
+            title = "Item Name",
+            hasTick = false,
+            bottomLeftIcon = R.drawable.selected_error_icon,
+            bottomLeftIconDescription = "error",
+            bottomLeftText = "Text"
+        )
+    }
 }

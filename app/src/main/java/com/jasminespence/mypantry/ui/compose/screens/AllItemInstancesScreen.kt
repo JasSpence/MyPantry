@@ -23,13 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.jasminespence.mypantry.MyPantryThemePreview
 import com.jasminespence.mypantry.ui.compose.components.DeleteRowBox
 import com.jasminespence.mypantry.ui.compose.components.ExpiryIcons
 import com.jasminespence.mypantry.ui.compose.components.ListOfRows
 import com.jasminespence.mypantry.ui.compose.components.SwipeableRow
 import com.jasminespence.mypantry.ui.theme.Dimensions
-import com.jasminespence.mypantry.ui.theme.MyPantryTheme
-import com.jasminespence.mypantry.ui.theme.red
+import com.jasminespence.mypantry.ui.theme.colorPalettes
 
 @Composable
 fun AllItemInstancesScreen(
@@ -99,7 +99,7 @@ fun InstanceRow(
                     color = color
                 )
             },
-            hiddenBoxColor = MaterialTheme.colorScheme.red.color,
+            hiddenBoxColor = MaterialTheme.colorScheme.colorPalettes.red.color,
             isSwipedRow = (swipedRow == rowId),
             setSwipedRow = { setSwipedRow(rowId) },
             resetSwipedRow = { setSwipedRow(null) },
@@ -136,7 +136,7 @@ fun InstanceRow(
 @Preview(showBackground = true)
 @Composable
 fun AllItemInstancesScreenPreview() {
-    MyPantryTheme() {
+    MyPantryThemePreview() {
         AllItemInstancesScreen(
             swipedRow = null,
             setSwipedRow = {}

@@ -18,9 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.jasminespence.mypantry.R
 import com.jasminespence.mypantry.ui.theme.ColorPalette
 import com.jasminespence.mypantry.ui.theme.Dimensions
-import com.jasminespence.mypantry.ui.theme.green
-import com.jasminespence.mypantry.ui.theme.red
-import com.jasminespence.mypantry.ui.theme.yellow
+import com.jasminespence.mypantry.ui.theme.colorPalettes
 
 @Composable
 fun IconBox(
@@ -59,7 +57,7 @@ fun TickBox(
 ) {
     IconBox(
         modifier = modifier,
-        colorPalette = MaterialTheme.colorScheme.green,
+        colorPalette = MaterialTheme.colorScheme.colorPalettes.green,
         iconId = R.drawable.tick_icon,
         contentDestination = "tick"
     )
@@ -71,7 +69,7 @@ fun WarningBox(
 ) {
     IconBox(
         modifier = modifier,
-        colorPalette = MaterialTheme.colorScheme.yellow,
+        colorPalette = MaterialTheme.colorScheme.colorPalettes.yellow,
         iconId = R.drawable.selected_error_icon,
         contentDestination = "warning"
     )
@@ -83,7 +81,7 @@ fun CrossBox(
 ) {
     IconBox(
         modifier = modifier,
-        colorPalette = MaterialTheme.colorScheme.red,
+        colorPalette = MaterialTheme.colorScheme.colorPalettes.red,
         iconId = R.drawable.cross_icon,
         contentDestination = "cross"
     )

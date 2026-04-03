@@ -3,6 +3,7 @@ package com.jasminespence.mypantry.ui.compose.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.jasminespence.mypantry.MyPantryThemePreview
 
 @Composable
 fun ExpiryIcons(
@@ -21,7 +22,9 @@ fun ExpiryIcons(
 @Preview(showBackground = true)
 @Composable
 fun ExpiryIconsPreview() {
-    ExpiryIcons(
-        expiry = -1
-    )
+    MyPantryThemePreview() {
+        ExpiryIcons(
+            expiry = -1
+        )
+    }
 }

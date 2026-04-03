@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,6 +26,9 @@ import com.jasminespence.mypantry.data.PantryRepo
 import com.jasminespence.mypantry.ui.compose.MainNavHost
 import com.jasminespence.mypantry.ui.compose.components.NavBar
 import com.jasminespence.mypantry.ui.compose.components.TopBar
+import com.jasminespence.mypantry.ui.theme.AppColorPalettes
+import com.jasminespence.mypantry.ui.theme.Contrast
+import com.jasminespence.mypantry.ui.theme.LocalAppColorPalettes
 import com.jasminespence.mypantry.ui.theme.MyPantryTheme
 
 class MainActivity : ComponentActivity() {
@@ -46,12 +50,12 @@ fun MyPantryApp() {
         )
     )
     val isDarkMode by viewModel.isDarkMode.collectAsStateWithLifecycle()
-    val contrast by viewModel.contrast.collectAsStateWithLifecycle()
+    val userSetContrast by viewModel.userSetContrast.collectAsStateWithLifecycle()
 
     MyPantryTheme(
         nullableDarkTheme = isDarkMode,
         dynamicColor = false,
-        nullableContrastLevel = contrast
+        nullableContrastLevel = userSetContrast
     ) {
         val navController = rememberNavController()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -83,9 +87,30 @@ fun MyPantryApp() {
             MainNavHost(
                 navController = navController,
                 viewModel = viewModel,
-                currentContrast = contrast,
+                userSetContrast = userSetContrast,
                 modifier = Modifier.padding(innerPadding)
             )
+        }
+    }
+}
+
+@Composable
+fun MyPantryThemePreview(
+    darkTheme: Boolean = false,
+    contrast: Contrast = Contrast.STANDARD,
+    content: @Composable () -> Unit
+) {
+    MyPantryTheme(
+        nullableDarkTheme = darkTheme,
+        nullableContrastLevel = contrast
+    ) {
+        CompositionLocalProvider(
+            LocalAppColorPalettes provides AppColorPalettes(
+                darkTheme = darkTheme,
+                contrastLevel = contrast
+            )
+        ) {
+            content()
         }
     }
 }
@@ -96,5 +121,7 @@ fun MyPantryApp() {
 )
 @Composable
 fun TwoTreesAppPreview() {
-    MyPantryApp()
+    MyPantryThemePreview() {
+        MyPantryApp()
+    }
 }

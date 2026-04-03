@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jasminespence.mypantry.MyPantryThemePreview
 import com.jasminespence.mypantry.ui.theme.Dimensions
 
 @Composable
@@ -60,10 +61,12 @@ fun PhotoWithRowComposableCard(
 @Preview(showBackground = true)
 @Composable
 fun PhotoWithRowComposableCardPreview() {
-    PhotoWithRowComposableCard(
-        photo = "",
-        composable = {
-            Text("Preview")
-        }
-    )
+    MyPantryThemePreview() {
+        PhotoWithRowComposableCard(
+            photo = "",
+            composable = {
+                Text("Preview")
+            }
+        )
+    }
 }

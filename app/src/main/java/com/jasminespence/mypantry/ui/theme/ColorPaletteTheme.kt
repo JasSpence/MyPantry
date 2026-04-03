@@ -1,164 +1,171 @@
 package com.jasminespence.mypantry.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.compositionLocalOf
 
-val ColorScheme.lightBlue: ColorPalette
-    @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) lightBlueHighContrastDarkScheme else lightBlueHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) lightBlueMediumContrastDarkScheme else lightBlueMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) lightBlueDarkScheme else lightBlueLightScheme
-            else -> if (darkScheme) lightBlueDarkScheme else lightBlueLightScheme
-        }
-    }
+data class AppColorPalettes(
+    val darkTheme: Boolean,
+    val contrastLevel: Contrast
+) {
+    val lightBlue get() = lightBlue(darkTheme, contrastLevel)
+    val red get() = red(darkTheme, contrastLevel)
+    val pink get() = pink(darkTheme, contrastLevel)
+    val orange get() = orange(darkTheme, contrastLevel)
+    val yellow get() = yellow(darkTheme, contrastLevel)
+    val turquoise get() = turquoise(darkTheme, contrastLevel)
+    val green get() = green(darkTheme, contrastLevel)
+    val cyan get() = cyan(darkTheme, contrastLevel)
+    val blue get() = blue(darkTheme, contrastLevel)
+    val darkBlue get() = darkBlue(darkTheme, contrastLevel)
+    val purple get() = purple(darkTheme, contrastLevel)
+    val grey get() = grey(darkTheme, contrastLevel)
+}
 
-val ColorScheme.red: ColorPalette
-    @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) redHighContrastDarkScheme else redHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) redMediumContrastDarkScheme else redMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) redDarkScheme else redLightScheme
-            else -> if (darkScheme) redDarkScheme else redLightScheme
-        }
-    }
+val LocalAppColorPalettes = compositionLocalOf<AppColorPalettes> {
+    error("No AppColorPalettes provided")
+}
 
-val ColorScheme.pink: ColorPalette
+val ColorScheme.colorPalettes: AppColorPalettes
     @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) pinkHighContrastDarkScheme else pinkHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) pinkMediumContrastDarkScheme else pinkMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) pinkDarkScheme else pinkLightScheme
-            else -> if (darkScheme) pinkDarkScheme else pinkLightScheme
-        }
-    }
+    get() = LocalAppColorPalettes.current
 
-val ColorScheme.orange: ColorPalette
+val ColorScheme.deactivatedPalette: ColorPalette
     @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) orangeHighContrastDarkScheme else orangeHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) orangeMediumContrastDarkScheme else orangeMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) orangeDarkScheme else orangeLightScheme
-            else -> if (darkScheme) orangeDarkScheme else orangeLightScheme
-        }
-    }
+    get() = LocalAppColorPalettes.current.grey
 
-val ColorScheme.yellow: ColorPalette
-    @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) yellowHighContrastDarkScheme else yellowHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) yellowMediumContrastDarkScheme else yellowMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) yellowDarkScheme else yellowLightScheme
-            else -> if (darkScheme) yellowDarkScheme else yellowLightScheme
-        }
-    }
+fun lightBlue(
+    darkScheme: Boolean, 
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) lightBlueHighContrastDarkScheme else lightBlueHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) lightBlueMediumContrastDarkScheme else lightBlueMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) lightBlueDarkScheme else lightBlueLightScheme
+    else -> if (darkScheme) lightBlueDarkScheme else lightBlueLightScheme
+}
 
-val ColorScheme.turquoise: ColorPalette
-    @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) turquoiseHighContrastDarkScheme else turquoiseHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) turquoiseMediumContrastDarkScheme else turquoiseMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) turquoiseDarkScheme else turquoiseLightScheme
-            else -> if (darkScheme) turquoiseDarkScheme else turquoiseLightScheme
-        }
-    }
+//val ColorScheme.lightBlue: ColorPalette
+//    @Composable
+//    get() {
+//        val darkScheme: Boolean = isSystemInDarkTheme()
+//        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
+//        return when (contrast) {
+//            Contrast.HIGH -> if (darkScheme) lightBlueHighContrastDarkScheme else lightBlueHighContrastLightScheme
+//            Contrast.MEDIUM -> if (darkScheme) lightBlueMediumContrastDarkScheme else lightBlueMediumContrastLightScheme
+//            Contrast.STANDARD -> if (darkScheme) lightBlueDarkScheme else lightBlueLightScheme
+//            else -> if (darkScheme) lightBlueDarkScheme else lightBlueLightScheme
+//        }
+//    }
 
-val ColorScheme.green: ColorPalette
-    @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) greenHighContrastDarkScheme else greenHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) greenMediumContrastDarkScheme else greenMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) greenDarkScheme else greenLightScheme
-            else -> if (darkScheme) greenDarkScheme else greenLightScheme
-        }
-    }
+fun red(
+    darkScheme: Boolean,
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) redHighContrastDarkScheme else redHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) redMediumContrastDarkScheme else redMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) redDarkScheme else redLightScheme
+    else -> if (darkScheme) redDarkScheme else redLightScheme
+}
 
-val ColorScheme.cyan: ColorPalette
-    @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) cyanHighContrastDarkScheme else cyanHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) cyanMediumContrastDarkScheme else cyanMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) cyanDarkScheme else cyanLightScheme
-            else -> if (darkScheme) cyanDarkScheme else cyanLightScheme
-        }
-    }
+fun pink(
+    darkScheme: Boolean,
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) pinkHighContrastDarkScheme else pinkHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) pinkMediumContrastDarkScheme else pinkMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) pinkDarkScheme else pinkLightScheme
+    else -> if (darkScheme) pinkDarkScheme else pinkLightScheme
+}
 
-val ColorScheme.blue: ColorPalette
-    @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) blueHighContrastDarkScheme else blueHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) blueMediumContrastDarkScheme else blueMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) blueDarkScheme else blueLightScheme
-            else -> if (darkScheme) blueDarkScheme else blueLightScheme
-        }
-    }
+fun orange(
+    darkScheme: Boolean,
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) orangeHighContrastDarkScheme else orangeHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) orangeMediumContrastDarkScheme else orangeMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) orangeDarkScheme else orangeLightScheme
+    else -> if (darkScheme) orangeDarkScheme else orangeLightScheme
+}
 
-val ColorScheme.darkBlue: ColorPalette
-    @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) darkBlueHighContrastDarkScheme else darkBlueHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) darkBlueMediumContrastDarkScheme else darkBlueMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) darkBlueDarkScheme else darkBlueLightScheme
-            else -> if (darkScheme) darkBlueDarkScheme else darkBlueLightScheme
-        }
-    }
+fun yellow(
+    darkScheme: Boolean,
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) yellowHighContrastDarkScheme else yellowHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) yellowMediumContrastDarkScheme else yellowMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) yellowDarkScheme else yellowLightScheme
+    else -> if (darkScheme) yellowDarkScheme else yellowLightScheme
+}
 
-val ColorScheme.purple: ColorPalette
-    @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) purpleHighContrastDarkScheme else purpleHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) purpleMediumContrastDarkScheme else purpleMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) purpleDarkScheme else purpleLightScheme
-            else -> if (darkScheme) purpleDarkScheme else purpleLightScheme
-        }
-    }
+fun turquoise(
+    darkScheme: Boolean,
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) turquoiseHighContrastDarkScheme else turquoiseHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) turquoiseMediumContrastDarkScheme else turquoiseMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) turquoiseDarkScheme else turquoiseLightScheme
+    else -> if (darkScheme) turquoiseDarkScheme else turquoiseLightScheme
+}
 
-val ColorScheme.grey: ColorPalette
-    @Composable
-    get() {
-        val darkScheme: Boolean = isSystemInDarkTheme()
-        val contrast: Contrast = resolveColorScheme(dynamicColor = false)
-        return when (contrast) {
-            Contrast.HIGH -> if (darkScheme) greyHighContrastDarkScheme else greyHighContrastLightScheme
-            Contrast.MEDIUM -> if (darkScheme) greyMediumContrastDarkScheme else greyMediumContrastLightScheme
-            Contrast.STANDARD -> if (darkScheme) greyDarkScheme else greyLightScheme
-            else -> if (darkScheme) greyDarkScheme else greyLightScheme
-        }
-    }
+fun green(
+    darkScheme: Boolean,
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) greenHighContrastDarkScheme else greenHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) greenMediumContrastDarkScheme else greenMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) greenDarkScheme else greenLightScheme
+    else -> if (darkScheme) greenDarkScheme else greenLightScheme
+}
+
+fun cyan(
+    darkScheme: Boolean,
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) cyanHighContrastDarkScheme else cyanHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) cyanMediumContrastDarkScheme else cyanMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) cyanDarkScheme else cyanLightScheme
+    else -> if (darkScheme) cyanDarkScheme else cyanLightScheme
+}
+
+fun blue(
+    darkScheme: Boolean,
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) blueHighContrastDarkScheme else blueHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) blueMediumContrastDarkScheme else blueMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) blueDarkScheme else blueLightScheme
+    else -> if (darkScheme) blueDarkScheme else blueLightScheme
+}
+
+fun darkBlue(
+    darkScheme: Boolean,
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) darkBlueHighContrastDarkScheme else darkBlueHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) darkBlueMediumContrastDarkScheme else darkBlueMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) darkBlueDarkScheme else darkBlueLightScheme
+    else -> if (darkScheme) darkBlueDarkScheme else darkBlueLightScheme
+}
+
+fun purple(
+    darkScheme: Boolean,
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) purpleHighContrastDarkScheme else purpleHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) purpleMediumContrastDarkScheme else purpleMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) purpleDarkScheme else purpleLightScheme
+    else -> if (darkScheme) purpleDarkScheme else purpleLightScheme
+}
+
+fun grey(
+    darkScheme: Boolean,
+    contrast: Contrast
+): ColorPalette = when (contrast) {
+    Contrast.HIGH -> if (darkScheme) greyHighContrastDarkScheme else greyHighContrastLightScheme
+    Contrast.MEDIUM -> if (darkScheme) greyMediumContrastDarkScheme else greyMediumContrastLightScheme
+    Contrast.STANDARD -> if (darkScheme) greyDarkScheme else greyLightScheme
+    else -> if (darkScheme) greyDarkScheme else greyLightScheme
+}
 
 // ------LightBlue------
 

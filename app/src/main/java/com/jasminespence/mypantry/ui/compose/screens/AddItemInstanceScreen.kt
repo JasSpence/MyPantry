@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jasminespence.mypantry.MyPantryThemePreview
 import com.jasminespence.mypantry.ui.theme.Dimensions
 
 @Composable
@@ -47,5 +48,7 @@ fun AddItemInstanceScreen(
 @Preview(showBackground = true)
 @Composable
 fun AddItemInstanceScreenPreview() {
-    AddItemInstanceScreen()
+    MyPantryThemePreview() {
+        AddItemInstanceScreen()
+    }
 }

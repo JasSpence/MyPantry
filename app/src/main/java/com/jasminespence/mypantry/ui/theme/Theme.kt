@@ -3,12 +3,14 @@ import android.app.UiModeManager
 import android.content.Context
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
 
 private val lightScheme = lightColorScheme(
@@ -241,39 +243,36 @@ private val highContrastDarkColorScheme = darkColorScheme(
 
 @Composable
 fun MyPantryTheme(
-    nullableDarkTheme: Boolean? = isSystemInDarkTheme(),
+    nullableDarkTheme: Boolean?,
     // Dynamic colour is available on Android 12+
     dynamicColor: Boolean = true,
-    nullableContrastLevel: Contrast? = resolveColorScheme(dynamicColor = dynamicColor),
+    nullableContrastLevel: Contrast?,
     content: @Composable () -> Unit
 ) {
-    val context = LocalContext.current
     val darkTheme = nullableDarkTheme ?: isSystemInDarkTheme()
-    val contrastLevel = nullableContrastLevel ?: resolveColorScheme(dynamicColor = dynamicColor)
+    val contrastLevel = nullableContrastLevel ?: getContrast(dynamicColor = dynamicColor)
 
-    val colorScheme = when (contrastLevel) {
-        Contrast.DYNAMIC -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-            } else {
-                if (darkTheme) darkScheme else lightScheme
-            }
-        }
-
-        Contrast.HIGH -> if (darkTheme) highContrastDarkColorScheme else highContrastLightColorScheme
-        Contrast.MEDIUM -> if (darkTheme) mediumContrastDarkColorScheme else mediumContrastLightColorScheme
-        Contrast.STANDARD -> if (darkTheme) darkScheme else lightScheme
-    }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = AppTypography,
-        content = content
+    val colorScheme = setColorScheme(
+        darkTheme = darkTheme,
+        contrastLevel = contrastLevel
     )
+
+    CompositionLocalProvider(
+        LocalAppColorPalettes provides AppColorPalettes(
+            darkTheme = darkTheme,
+            contrastLevel = contrastLevel
+        )
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = AppTypography,
+            content = content
+        )
+    }
 }
 
 @Composable
-fun resolveColorScheme(
+fun getContrast(
     dynamicColor: Boolean
 ): Contrast {
     val context = LocalContext.current
@@ -293,6 +292,38 @@ fun resolveColorScheme(
         }
         else -> Contrast.STANDARD
     }
+}
+
+@Composable
+private fun setColorScheme(
+    darkTheme: Boolean,
+    contrastLevel: Contrast,
+): ColorScheme {
+    val context = LocalContext.current
+    return when (contrastLevel) {
+        Contrast.DYNAMIC -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            } else {
+                if (darkTheme) darkScheme else lightScheme
+            }
+        }
+
+        Contrast.HIGH -> if (darkTheme) highContrastDarkColorScheme else highContrastLightColorScheme
+        Contrast.MEDIUM -> if (darkTheme) mediumContrastDarkColorScheme else mediumContrastLightColorScheme
+        Contrast.STANDARD -> if (darkTheme) darkScheme else lightScheme
+    }
+}
+
+@Composable
+fun localThemeColorScheme(
+    darkTheme: Boolean,
+    contrastLevel: Contrast,
+): ColorScheme {
+    return setColorScheme(
+        darkTheme = darkTheme,
+        contrastLevel = contrastLevel
+    )
 }
 
 

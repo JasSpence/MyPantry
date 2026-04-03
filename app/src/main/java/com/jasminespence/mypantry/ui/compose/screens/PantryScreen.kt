@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jasminespence.mypantry.MyPantryThemePreview
 import com.jasminespence.mypantry.data.entites.PantryItem
 import com.jasminespence.mypantry.data.entites.PantryItemInstance
 import com.jasminespence.mypantry.data.entites.StorageLocation
@@ -43,9 +44,7 @@ import com.jasminespence.mypantry.ui.compose.components.DataItemGrid
 import com.jasminespence.mypantry.ui.compose.components.DataItemRow
 import com.jasminespence.mypantry.ui.theme.ColorPalette
 import com.jasminespence.mypantry.ui.theme.Dimensions
-import com.jasminespence.mypantry.ui.theme.green
-import com.jasminespence.mypantry.ui.theme.grey
-import com.jasminespence.mypantry.ui.theme.red
+import com.jasminespence.mypantry.ui.theme.colorPalettes
 
 @Composable
 fun PantryScreen(
@@ -216,17 +215,17 @@ fun PantryItemBox(
             if (isItemSelected) {
                 ItemSelectedOption(
                     text = "Add new Instance",
-                    colorPalette = MaterialTheme.colorScheme.green,
+                    colorPalette = MaterialTheme.colorScheme.colorPalettes.green,
                     onClick = { onAddNewInstancesClick(itemId) }
                 )
                 ItemSelectedOption(
                     text = "View Instances",
-                    colorPalette = MaterialTheme.colorScheme.grey,
+                    colorPalette = MaterialTheme.colorScheme.colorPalettes.grey,
                     onClick = { onViewInstancesClick(itemId) }
                 )
                 ItemSelectedOption(
                     text = "Delete Instance",
-                    colorPalette = MaterialTheme.colorScheme.red,
+                    colorPalette = MaterialTheme.colorScheme.colorPalettes.red,
                     onClick = { onDeleteInstanceClick(itemId) }
                 )
             }
@@ -374,54 +373,56 @@ fun PantryItemRowPlaceholder(
 @Preview(showBackground = true)
 @Composable
 fun PantryScreenPreview() {
-    val storageLocation = StorageLocation(
-        name = "Pantry",
-        colour = Color.Blue
-    )
-    val pantryItem1 = PantryItem(
-        id = 0,
-        name = "Bread",
-        storageLocation = storageLocation.id
-    )
-    val pantryItem2 = PantryItem(
-        id = 1,
-        name = "Banana",
-        storageLocation = storageLocation.id
-    )
-    val pantryWithInstances1 = PantryItemWithInstances(
-        pantryItem = pantryItem1,
-        instances = listOf(
-            PantryItemInstance(
-                id = 0,
-                pantryItem = pantryItem1.id
-            ),
-            PantryItemInstance(
-                id = 1,
-                pantryItem = pantryItem1.id,
-                expiryDate = Instant.DISTANT_FUTURE
+    MyPantryThemePreview() {
+        val storageLocation = StorageLocation(
+            name = "Pantry",
+            colour = Color.Blue
+        )
+        val pantryItem1 = PantryItem(
+            id = 0,
+            name = "Bread",
+            storageLocation = storageLocation.id
+        )
+        val pantryItem2 = PantryItem(
+            id = 1,
+            name = "Banana",
+            storageLocation = storageLocation.id
+        )
+        val pantryWithInstances1 = PantryItemWithInstances(
+            pantryItem = pantryItem1,
+            instances = listOf(
+                PantryItemInstance(
+                    id = 0,
+                    pantryItem = pantryItem1.id
+                ),
+                PantryItemInstance(
+                    id = 1,
+                    pantryItem = pantryItem1.id,
+                    expiryDate = Instant.DISTANT_FUTURE
+                )
             )
         )
-    )
-    val pantryWithInstances2 = PantryItemWithInstances(
-        pantryItem = pantryItem2,
-        instances = listOf(
-            PantryItemInstance(
-                id = 3,
-                pantryItem = pantryItem2.id
+        val pantryWithInstances2 = PantryItemWithInstances(
+            pantryItem = pantryItem2,
+            instances = listOf(
+                PantryItemInstance(
+                    id = 3,
+                    pantryItem = pantryItem2.id
+                )
             )
         )
-    )
-    val pantryItemsWithInstances = listOf(pantryWithInstances1, pantryWithInstances2)
-    PantryScreen(
-        pantryItemsWithInstances = pantryItemsWithInstances,
-        pantryItemQuantities = mapOf(pantryItem1.id to 2, pantryItem2.id to 1),
-        isGridSelected = true,
-        changeView = {},
-        selectedPantryItem = null,
-        onPantryItemClick = {},
-        onAddItemClick = {},
-        onAddNewInstancesClick = {},
-        onViewInstancesClick = {},
-        onDeleteInstanceClick = {}
-    )
+        val pantryItemsWithInstances = listOf(pantryWithInstances1, pantryWithInstances2)
+        PantryScreen(
+            pantryItemsWithInstances = pantryItemsWithInstances,
+            pantryItemQuantities = mapOf(pantryItem1.id to 2, pantryItem2.id to 1),
+            isGridSelected = true,
+            changeView = {},
+            selectedPantryItem = null,
+            onPantryItemClick = {},
+            onAddItemClick = {},
+            onAddNewInstancesClick = {},
+            onViewInstancesClick = {},
+            onDeleteInstanceClick = {}
+        )
+    }
 }

@@ -18,17 +18,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jasminespence.mypantry.ui.compose.components.RowSelector
+import com.jasminespence.mypantry.MyPantryThemePreview
+import com.jasminespence.mypantry.ui.compose.components.SliderSelectorWithToggle
+import com.jasminespence.mypantry.ui.theme.ColorPalette
 import com.jasminespence.mypantry.ui.theme.Contrast
 import com.jasminespence.mypantry.ui.theme.Dimensions
 import com.jasminespence.mypantry.ui.theme.contrastChoices
-import com.jasminespence.mypantry.ui.theme.grey
+import com.jasminespence.mypantry.ui.theme.getContrast
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
-    currentContrast: Contrast?,
-    setContrast: (Contrast) -> Unit
+    userSetContrast: Contrast?,
+    setUserSetContrast: (Contrast?) -> Unit
 ) {
     Box(
         modifier = modifier
@@ -76,11 +78,30 @@ fun ProfileScreen(
             ) {
                 Text("Contrast/Theme Settings")
             }
-            RowSelector(
-                setOption = setContrast,
-                choices = contrastChoices,
-                currentOption = currentContrast,
-                colorPalette = MaterialTheme.colorScheme.grey
+            val systemContrast = getContrast(dynamicColor = false)
+            val primaryColorPalette = ColorPalette(
+                color = MaterialTheme.colorScheme.primary,
+                onColor = MaterialTheme.colorScheme.onPrimary,
+                surface = MaterialTheme.colorScheme.surfaceVariant,
+                onSurface = MaterialTheme.colorScheme.onSurfaceVariant,
+                container = MaterialTheme.colorScheme.primaryContainer,
+                onContainer = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+            SliderSelectorWithToggle(
+                colorPalette = primaryColorPalette,
+                isSliderActivated = userSetContrast != null,
+                onToggle = {
+                    if (userSetContrast == null) {
+                        setUserSetContrast(systemContrast)
+                    } else {
+                        setUserSetContrast(null)
+                    }
+                },
+                text = "Use System Contrast",
+                sliderChoices = contrastChoices,
+                onSlide = setUserSetContrast,
+                activatedSliderOption = userSetContrast,
+                deactivatedSliderOption = systemContrast
             )
         }
     }
@@ -89,8 +110,10 @@ fun ProfileScreen(
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen(
-        setContrast = {},
-        currentContrast = Contrast.STANDARD
-    )
+    MyPantryThemePreview() {
+        ProfileScreen(
+            setUserSetContrast = {},
+            userSetContrast = Contrast.STANDARD
+        )
+    }
 }

@@ -25,7 +25,7 @@ import com.jasminespence.mypantry.ui.theme.Contrast
 fun MainNavHost(
     navController: NavHostController,
     viewModel: MainViewModel,
-    currentContrast: Contrast?,
+    userSetContrast: Contrast?,
     modifier: Modifier = Modifier
 ) {
     val pantryItemsWithInstances by viewModel.pantryItemsWithInstances.collectAsStateWithLifecycle()
@@ -70,8 +70,8 @@ fun MainNavHost(
         }
         composable(route=Screen.Profile.route) {
             ProfileScreen(
-                currentContrast = currentContrast,
-                setContrast = { viewModel.setContrast(it) }
+                userSetContrast = userSetContrast,
+                setUserSetContrast = { viewModel.setUserSetContrast(it) }
             )
         }
         composable(route=Screen.AddItem.route) {

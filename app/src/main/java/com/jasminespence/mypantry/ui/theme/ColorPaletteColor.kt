@@ -1,6 +1,8 @@
 package com.jasminespence.mypantry.ui.theme
 import androidx.compose.ui.graphics.Color
 
+// TODO: Add Dark Scheme Colours
+
 // Colour Roles:
 // Surface – A role used for backgrounds and large, low-emphasis areas of the screen.
 // Colour (Primary, Secondary, Tertiary) – Accent colour roles used to emphasise or de-emphasise foreground elements.

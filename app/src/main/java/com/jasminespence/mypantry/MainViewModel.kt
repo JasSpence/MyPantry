@@ -23,11 +23,11 @@ class MainViewModel(
         _isDarkMode.value = isDarkMode
     }
 
-    private val _contrast = MutableStateFlow<Contrast?>(null)
-    val contrast: StateFlow<Contrast?> = _contrast
+    private val _userSetContrast = MutableStateFlow<Contrast?>(null)
+    val userSetContrast: StateFlow<Contrast?> = _userSetContrast
 
-    fun setContrast (contrast: Contrast?) {
-        _contrast.value = contrast
+    fun setUserSetContrast (contrast: Contrast?) {
+        _userSetContrast.value = contrast
     }
 
     val pantryItemsWithInstances: StateFlow<List<PantryItemWithInstances>> = pantryRepo.pantryItemsWithInstances
